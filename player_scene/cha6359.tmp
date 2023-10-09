@@ -671,7 +671,7 @@ states/jump_start/position = Vector2(219, 0)
 states/shoot/node = SubResource("AnimationNodeAnimation_x8bia")
 states/shoot/position = Vector2(522, 245)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_rm4y6"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vt75g"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_3c5lr"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_gd5lc"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_q0a14"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_k5jup"), "Move", "shoot", SubResource("AnimationNodeStateMachineTransition_oxcmv"), "shoot", "Move", SubResource("AnimationNodeStateMachineTransition_0gxak"), "Move", "grapple", SubResource("AnimationNodeStateMachineTransition_n4sn1"), "jump_start", "grapple", SubResource("AnimationNodeStateMachineTransition_as2a6"), "grapple", "jump_start", SubResource("AnimationNodeStateMachineTransition_2dpok"), "grapple", "Move", SubResource("AnimationNodeStateMachineTransition_uce3k"), "shoot", "grappled", SubResource("AnimationNodeStateMachineTransition_nijxh"), "grappled", "shoot", SubResource("AnimationNodeStateMachineTransition_2lkct"), "grapple", "grappled", SubResource("AnimationNodeStateMachineTransition_6had0"), "grappled", "jump_start", SubResource("AnimationNodeStateMachineTransition_sn16g")]
-graph_offset = Vector2(-83.5, 60)
+graph_offset = Vector2(-74.5, -66)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_taclr"]
 size = Vector2(17.5, 53.5)
@@ -743,20 +743,20 @@ can_move = false
 
 [node name="hurt" type="Node" parent="CharacterStateMachine"]
 
-[node name="attack" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state")]
+[node name="attack" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("12_mlxgy")
-return_state = NodePath("../ground")
+return_animation_node = null
+attack1_node = null
 can_move = false
+return_state = null
 
 [node name="Timer" type="Timer" parent="CharacterStateMachine/attack"]
 wait_time = 0.254
 one_shot = true
 
-[node name="shoot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "grappled_state", "player")]
+[node name="shoot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state")]
 script = ExtResource("13_hjeen")
 return_state = NodePath("../ground")
-grappled_state = NodePath("../grappled")
-player = NodePath("../..")
 can_move = false
 
 [node name="Timer" type="Timer" parent="CharacterStateMachine/shoot"]
@@ -817,12 +817,10 @@ remote_path = NodePath("../CharacterStateMachine/grapple/RayCast2D2")
 [node name="RemoteTransform2D3" type="RemoteTransform2D" parent="."]
 remote_path = NodePath("../CharacterStateMachine/grapple/RayCast2D3")
 
-[connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_character_body_2d_facing_direction_changed"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/land" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/attack" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/shoot" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grapple" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grappled" method="_on_animation_tree_animation_finished"]
-[connection signal="currently_shooting" from="CharacterStateMachine/shoot" to="." method="_on_shoot_currently_shooting"]
 [connection signal="body_entered" from="atk_hitbox" to="atk_hitbox" method="_on_body_entered"]

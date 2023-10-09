@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvdj8i85hs41i"]
+
+[ext_resource type="Script" path="res://player_scene/Chain.gd" id="1_x6d3n"]
+[ext_resource type="Texture2D" uid="uid://bicegrk3323eu" path="res://gfx/link.png" id="2_21trl"]
+[ext_resource type="Texture2D" uid="uid://c0t0v45x6kfml" path="res://gfx/hook.png" id="3_83vxj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rxmex"]
+
+[node name="Chain" type="Node2D"]
+position = Vector2(-1, -30)
+script = ExtResource("1_x6d3n")
+
+[node name="Links" type="Sprite2D" parent="."]
+position = Vector2(-1.78814e-07, 10.4998)
+scale = Vector2(0.625, 0.812526)
+texture = ExtResource("2_21trl")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.727
+one_shot = true
+
+[node name="Tip" type="CharacterBody2D" parent="."]
+collision_layer = 8
+
+[node name="hook" type="Sprite2D" parent="Tip"]
+scale = Vector2(0.625, 0.65625)
+texture = ExtResource("3_83vxj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tip"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_rxmex")

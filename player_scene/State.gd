@@ -8,6 +8,9 @@ var character : CharacterBody2D
 var playback : AnimationNodeStateMachinePlayback
 var next_state : State
 
+signal interrupt_state(new_state : State)
+
+#defaults
 func state_process(delta):
 	pass
 
@@ -19,24 +22,3 @@ func on_enter():
 
 func on_exit():
 	pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

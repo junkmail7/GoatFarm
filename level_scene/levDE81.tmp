@@ -59,7 +59,7 @@ layer_0/tile_data = PackedInt32Array(196594, 1, 0, 196595, 65537, 0, 196596, 131
 [node name="player" parent="." instance=ExtResource("2_ap52n")]
 position = Vector2(-481, -318)
 
-[node name="RemoteTransform2D4" type="RemoteTransform2D" parent="player"]
+[node name="RemoteTransform2D2" type="RemoteTransform2D" parent="player"]
 position = Vector2(-1, 0)
 remote_path = NodePath("../../Camera2D")
 
@@ -70,3 +70,9 @@ position = Vector2(-482, -318)
 position = Vector2(-336, -235)
 
 [node name="healthchangemanager" parent="." instance=ExtResource("4_3fg3q")]
+
+[node name="stage_ground2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stage_ground2"]
+position = Vector2(6, -393)
+shape = SubResource("RectangleShape2D_7kdyc")
