@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdxatvosganh"]
+[gd_scene load_steps=11 format=3 uid="uid://cdxatvosganh"]
 
 [ext_resource type="Texture2D" uid="uid://cmk28u6k8o0pr" path="res://gfx/web pics (1).png" id="1_1vd52"]
 [ext_resource type="PackedScene" uid="uid://c4avhhmn1ds7r" path="res://player_scene/character_body_2d.tscn" id="2_ap52n"]
 [ext_resource type="PackedScene" uid="uid://dt47cwh8xk6g7" path="res://enemy_scene/enemy.tscn" id="3_jb5w1"]
 [ext_resource type="PackedScene" uid="uid://khd0usbr3eol" path="res://UI/healthchangemanager.tscn" id="4_3fg3q"]
+[ext_resource type="PackedScene" uid="uid://bejwxxu3x5kif" path="res://items/brick.tscn" id="5_0ir03"]
+[ext_resource type="PackedScene" uid="uid://g6ijwpkm7pk1" path="res://p2/player_2.tscn" id="6_8eroo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7kdyc"]
 size = Vector2(1465, 20)
@@ -43,6 +45,8 @@ texture = ExtResource("1_1vd52")
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_hvtqt")
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w4ahw"]
+
 [node name="level" type="Node2D"]
 
 [node name="stage_ground" type="StaticBody2D" parent="."]
@@ -70,3 +74,10 @@ position = Vector2(-482, -318)
 position = Vector2(-336, -235)
 
 [node name="healthchangemanager" parent="." instance=ExtResource("4_3fg3q")]
+
+[node name="brick" parent="." instance=ExtResource("5_0ir03")]
+position = Vector2(-239, -390)
+physics_material_override = SubResource("PhysicsMaterial_w4ahw")
+
+[node name="player2" parent="." instance=ExtResource("6_8eroo")]
+position = Vector2(330, -364)

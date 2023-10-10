@@ -20,7 +20,7 @@ func state_process(delta):
 		
 #EX for performing aerial actions		
 func state_input(event : InputEvent):
-	if event is InputEventMouseButton:
+	if(event.is_action_pressed("grapple")):
 		print_debug("air_grapple")
 		next_state = grapple_state
 	if(event.is_action_pressed("shoot")):

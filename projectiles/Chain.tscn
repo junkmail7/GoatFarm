@@ -16,7 +16,7 @@ scale = Vector2(0.625, 0.812526)
 texture = ExtResource("2_21trl")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.727
+wait_time = 0.315
 one_shot = true
 
 [node name="Tip" type="CharacterBody2D" parent="."]
@@ -29,3 +29,5 @@ texture = ExtResource("3_83vxj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tip"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_rxmex")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

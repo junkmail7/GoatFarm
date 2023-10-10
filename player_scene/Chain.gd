@@ -3,6 +3,8 @@ extends Node2D
 @onready var links = $Links	
 #@onready var tip : Vector2 = $Tip
 @onready var sprite : Sprite2D = $hook
+@onready var timer : Timer = $Timer
+
 	# A slightly easier reference to the links
 var direction := Vector2(0,0)	# The direction in which the chain was shot
 var tip = Vector2(0,0)			# The global position the tip should be in
@@ -18,8 +20,9 @@ var hooked = false	# Whether the chain has connected to a wall
 
 # shoot() shoots the chain in a given direction
 func shoot(dir: Vector2) -> void:
-	direction = dir.normalized()	# Normalize the direction and save it
-	flying = true					# Keep track of our current scan
+	timer.start()
+	direction = dir.normalized()
+	flying = true	# Normalize the direction and save it					# Keep track of our current scan
 	tip = self.global_position		# reset the tip position to the player's position
 
 # release() the chain
@@ -29,7 +32,7 @@ func release() -> void:
 
 # Every graphics frame we update the visuals
 func _process(_delta: float) -> void:
-	self.visible = flying or hooked	# Only visible if flying or attached to something
+	self.visible = flying or hooked	# Only visible if flying or attached to something	
 	if not self.visible:
 		return	# Not visible -> nothing to draw
 	var tip_loc = to_local(tip)	# Easier to work in local coordinates
@@ -53,7 +56,10 @@ func _physics_process(_delta: float) -> void:
 
 
 
-
+func _on_timer_timeout():
+	if(hooked == false):
+		flying = false	# Not flying anymore	
+		hooked = false
 
 
 
@@ -70,7 +76,6 @@ func _physics_process(_delta: float) -> void:
 #@export var hook_speed = 700
 #@onready var player = get_parent().get_parent().get_parent()
 #@onready var grapple = get_parent()
-#@onready var timer : Timer = $Timer
 #
 #var dir_x = 1
 #var dir_y = 0
@@ -110,3 +115,6 @@ func _physics_process(_delta: float) -> void:
 #		if child is Damageable:
 #			var damage = 4
 #			child.hit(damage, Vector2.RIGHT)
+
+
+

@@ -11,6 +11,10 @@ class_name GroundState
 @export var shoot_animation : String = "shoot"
 @export var grapple_state : State
 @export var grapple_animation : String = "grapple"
+@export var grab_state : State
+@export var grab_animation : String = "grabitem"
+@export var parry_state : State
+@export var parry_animation : String = "parry"
 
 func state_process(delta):
 	if(!character.is_on_floor()):
@@ -23,8 +27,12 @@ func state_input(event : InputEvent):
 		attack()
 	if(event.is_action_pressed("shoot")):
 		shoot()
-	if event is InputEventMouseButton:
+	if(event.is_action_pressed("grapple")):
 		grapple()
+	if(event.is_action_pressed("grab_and_throw")):
+		grab()
+	if(event.is_action_pressed("parry")):
+		parry()
 		
 func jump():
 	character.velocity.y = jump_velocity
@@ -42,3 +50,11 @@ func shoot():
 func grapple():
 	next_state = grapple_state
 	playback.travel(grapple_animation)
+
+func grab():
+	next_state = grab_state
+	playback.travel(grab_animation)
+
+func parry():
+	next_state = parry_state
+	playback.travel(parry_animation)

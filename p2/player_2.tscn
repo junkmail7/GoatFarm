@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://g6ijwpkm7pk1"]
+
+[ext_resource type="Texture2D" uid="uid://bg5bjhn7gcr80" path="res://gfx/Untitled.png" id="1_n3h3b"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cgqfg"]
+height = 54.0
+
+[node name="player2" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.999996, -29)
+scale = Vector2(0.479885, 0.738372)
+texture = ExtResource("1_n3h3b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -27)
+shape = SubResource("CapsuleShape2D_cgqfg")
