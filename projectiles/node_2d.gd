@@ -14,9 +14,14 @@ func _ready():
 	#print(parent.connect("facing_direction_changed", _on_player_facing_direction_changed))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+var motion = 0
 func _process(delta):
-	var motion = (Vector2(dir_x, dir_y)).normalized() * bullet_speed
-	set_position(get_position() + motion * delta)
+	if (is_parried == false):
+		motion = (Vector2(dir_x, dir_y)).normalized() * bullet_speed
+		set_position(get_position() + motion * delta)
+	else:
+		motion = parried_dir * bullet_speed
+		set_position(get_position() + motion * delta)
 
 
 func _on_timer_timeout():
@@ -38,3 +43,12 @@ func _on_body_entered(body):
 		if child is Damageable:
 			var damage = 4
 			child.hit(damage, Vector2.RIGHT)
+
+var is_parried = false
+var parried_dir = Vector2(0,0)
+
+func _on_parryable_on_parried(node, knockback_direction):
+	is_parried = true
+	parried_dir = knockback_direction
+
+

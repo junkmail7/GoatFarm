@@ -785,8 +785,8 @@ shape = SubResource("CapsuleShape2D_808ju")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-3, -17)
-texture = ExtResource("3_wvd16")
-hframes = 8
+texture = ExtResource("2_fo24g")
+hframes = 3
 frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -861,6 +861,15 @@ player = NodePath("../..")
 
 [node name="Timer" type="Timer" parent="CharacterStateMachine/grapple"]
 wait_time = 0.335
+
+[node name="RayCast2D" type="RayCast2D" parent="CharacterStateMachine/grapple"]
+target_position = Vector2(320, -240)
+
+[node name="RayCast2D2" type="RayCast2D" parent="CharacterStateMachine/grapple"]
+target_position = Vector2(354, -1)
+
+[node name="RayCast2D3" type="RayCast2D" parent="CharacterStateMachine/grapple"]
+target_position = Vector2(0, -278)
 
 [node name="grappled" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "ground_state", "player", "shoot_state")]
 script = ExtResource("19_2p6fb")

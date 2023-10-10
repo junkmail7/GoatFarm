@@ -1,7 +1,6 @@
-extends State
+extends Area2D
 
-@export var dead_state : State
-@export var dead_animation_node : String = "dead"
+@export var timer : Timer
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -12,6 +11,9 @@ func _process(delta):
 	pass
 
 
-func _on_gib_box_gibbed(gib):
-	next_state = dead_state
-	playback.travel(dead_animation_node)
+func _on_body_entered(body):
+	for child in body.get_children():
+		#print(child)
+		if child is Player:
+			timer.start()
+			print(timer.time_left)

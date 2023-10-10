@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bejwxxu3x5kif"]
+[gd_scene load_steps=6 format=3 uid="uid://d0koof6k8sdrl"]
 
 [ext_resource type="Script" path="res://items/brick.gd" id="1_gdti0"]
 [ext_resource type="Texture2D" uid="uid://bicegrk3323eu" path="res://gfx/link.png" id="2_2p0hr"]
+[ext_resource type="Script" path="res://items/SuperParryable.gd" id="4_sgnub"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q05pc"]
 
@@ -9,6 +10,7 @@
 size = Vector2(73, 37)
 
 [node name="brick" type="RigidBody2D"]
+collision_mask = 33
 mass = 1.91
 script = ExtResource("1_gdti0")
 
@@ -26,3 +28,8 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_a6fws")
+
+[node name="SuperParryable" type="Node" parent="."]
+script = ExtResource("4_sgnub")
+
+[connection signal="on_superparried" from="SuperParryable" to="." method="_on_super_parryable_on_superparried"]
