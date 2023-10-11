@@ -298,6 +298,11 @@ script = ExtResource("13_1ex7o")
 position = Vector2(13, -73)
 shape = SubResource("RectangleShape2D_outy1")
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(1, 46)
+
+[node name="chain" type="Node2D" parent="."]
+
 [connection signal="animation_finished" from="AnimationTree" to="damageable" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/parry" method="_on_animation_tree_animation_finished"]
 [connection signal="timeout" from="CharacterStateMachine/hurt/Timer" to="CharacterStateMachine/hurt" method="_on_timer_timeout"]
