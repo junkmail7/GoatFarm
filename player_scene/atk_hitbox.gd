@@ -12,8 +12,8 @@ func _ready():
 
 func _on_body_entered(body):
 	for child in body.get_children():
-		print(child)
-		if child is Damageable:
+		#print(child)
+		if child is Damageable_Enemy:
 			var direction_to_damageable = (body.global_position - get_parent().global_position)
 			var direction_sign = sign(direction_to_damageable.x)
 			

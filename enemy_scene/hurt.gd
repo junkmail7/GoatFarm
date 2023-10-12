@@ -3,7 +3,7 @@ extends State
 class_name HitState
 # Called when the node enters the scene tree for the first time.
 @export var dead_state : State
-@export var damageable : Damageable
+@export var damageable : Damageable_Enemy
 @export var dead_animation_node : String = "dead"
 @export var knockback_speed : float = 100.0
 @export var return_state : State
@@ -26,7 +26,7 @@ func on_damageable_hit(node : Node, damage_amount : int, knockback_direction : V
 	else:
 		emit_signal("interrupt_state", dead_state)
 		playback.travel(dead_animation_node)
-		
+
 func on_exit(): #change velocity again after initial_knockback if needed?
 	character.velocity = Vector2.ZERO
 

@@ -40,7 +40,7 @@ var smartguy = false
 func _input(event: InputEvent) -> void: 
 	var direction = Vector2()
 	direction.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
-	direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("up"))
+	direction.y = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
 	
 	if(event.is_action_pressed("grapple") && !$Chain.hooked):
 		if event.pressed && (face_dir == true) && direction == Vector2(1, -1):
@@ -52,9 +52,11 @@ func _input(event: InputEvent) -> void:
 		elif event.pressed && (face_dir == true) && direction == Vector2(0, 0):
 			$Chain.shoot(Vector2(1, 0))
 		elif event.pressed && (face_dir == true) && direction == Vector2(0, 1):
+			print("down")
 			$Chain.shoot(Vector2(0,1))
 		elif event.pressed && (face_dir == true) && direction == Vector2(1, 1):
 			$Chain.shoot(Vector2(1, 1))
+
 			
 		elif event.pressed && (face_dir == false) && direction == Vector2(-1, -1):
 			$Chain.shoot(Vector2(-1,-1))
@@ -81,7 +83,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	direction = Input.get_vector("left", "right", "up", "ui_down")
+	direction = Input.get_vector("left", "right", "up", "down")
 	
 	if direction.x != 0 && state_machine.check_if_can_move():
 		velocity.x = move_toward(velocity.x, speed * direction.x, acceleration * delta)

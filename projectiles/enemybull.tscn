@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdbb5qmy4m1mg"]
+
+[ext_resource type="Texture2D" uid="uid://yefyleix7mg0" path="res://gfx/enemy buyll.png" id="1_5sk48"]
+[ext_resource type="Script" path="res://projectiles/enemybull.gd" id="1_h5na8"]
+[ext_resource type="Script" path="res://projectiles/enemy_bull_parry.gd" id="3_a4smm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_765d3"]
+size = Vector2(50, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vdkde"]
+size = Vector2(68, 20)
+
+[node name="enemybull" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_h5na8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -2)
+shape = SubResource("RectangleShape2D_765d3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.197699, 0.223118)
+texture = ExtResource("1_5sk48")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.623
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 34
+collision_mask = 34
+
+[node name="Parryable" type="Node" parent="CharacterBody2D"]
+script = ExtResource("3_a4smm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_vdkde")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="on_parried" from="CharacterBody2D/Parryable" to="." method="_on_parryable_on_parried"]

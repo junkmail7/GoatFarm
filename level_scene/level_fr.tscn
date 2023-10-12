@@ -5,17 +5,18 @@
 [node name="level" instance=ExtResource("1_eqhio")]
 
 [node name="player" parent="." index="2"]
-position = Vector2(446, -799)
+position = Vector2(-533, -32)
 
 [node name="Camera2D" parent="." index="3"]
-position = Vector2(445, -798)
+position = Vector2(444, -794)
 
 [node name="enemy" parent="." index="4"]
-position = Vector2(-107, -980)
+position = Vector2(-223, 14)
 
 [node name="brick" parent="." index="6"]
-position = Vector2(340, -173)
-collision_layer = 33
+position = Vector2(-37, 11)
+collision_layer = 161
+collision_mask = 161
 
 [node name="player2" parent="." index="7"]
 visible = false
@@ -32,19 +33,18 @@ wait_time = 7.555
 wait_time = 7.005
 
 [node name="CollisionShape2D" parent="winplat" index="2"]
-position = Vector2(42, -1082)
+position = Vector2(40, -1086)
 
-[node name="Label" parent="winplat/CollisionShape2D" index="0" node_paths=PackedStringArray("timer")]
+[node name="Label" parent="winplat/CollisionShape2D" index="0"]
 offset_left = 354.0
 offset_top = 84.0
 offset_right = 475.0
 offset_bottom = 112.0
-timer = NodePath("../../Timer")
 
 [node name="Label2" parent="winplat/CollisionShape2D" index="1"]
-offset_left = -496.0
-offset_top = 126.0
-offset_right = -355.0
-offset_bottom = 157.0
+offset_left = -643.0
+offset_top = 72.0
+offset_right = -502.0
+offset_bottom = 103.0
 
 [connection signal="body_exited" from="winplat" to="winplat" method="_on_body_exited"]

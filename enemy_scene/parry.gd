@@ -15,6 +15,7 @@ func _process(delta):
 
 
 func _on_animation_tree_animation_finished(anim_name):
-	next_state = return_state
-	playback.travel(return_animation_node)
-	print_debug("stop parry")
+	if (anim_name == "parry"):
+		next_state = return_state
+		playback.travel(return_animation_node)
+		print_debug("stop parry")

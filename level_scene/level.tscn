@@ -105,12 +105,13 @@ one_shot = true
 position = Vector2(42, -1172.5)
 shape = SubResource("RectangleShape2D_vhho5")
 
-[node name="Label" type="Label" parent="winplat/CollisionShape2D"]
+[node name="Label" type="Label" parent="winplat/CollisionShape2D" node_paths=PackedStringArray("timer")]
 offset_left = 155.0
 offset_top = -98.0
 offset_right = 276.0
 offset_bottom = -70.0
 script = ExtResource("9_d8ydi")
+timer = NodePath("../../Timer")
 
 [node name="Label2" type="Label" parent="winplat/CollisionShape2D" node_paths=PackedStringArray("timer2")]
 offset_right = 40.0

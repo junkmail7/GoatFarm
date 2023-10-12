@@ -1,12 +1,14 @@
 extends RigidBody2D
 
 var picked = false
-
+var enemy_picked = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if picked == true:
 		self.position = get_node("../player/Marker2D").global_position
+	if enemy_picked == true:
+		self.position = get_node("../enemy/Marker2D").global_position
 	if is_parried:
 		linear_velocity = parried_dir * 800
 		is_parried = false		
@@ -28,6 +30,22 @@ func _input(event):
 		linear_velocity = Vector2(-800,-150)
 		angular_velocity = 45.0
 		picked = false
+		
+	if Input.is_action_just_pressed("p2_grab"):
+		var bodies = $Area2D.get_overlapping_bodies()
+		for body in bodies:
+			if body.name == "enemy" and get_node("../enemy").can_grab == true:
+				enemy_picked = true
+	if Input.is_action_just_pressed("p2_release") && enemy_picked == true && (get_node("../enemy").face_dir == true):
+		print()
+		linear_velocity = Vector2(800,-100)
+		angular_velocity = 45.0
+		enemy_picked = false
+	if Input.is_action_just_pressed("p2_release") && enemy_picked == true && (get_node("../enemy").face_dir == false):
+		print()
+		linear_velocity = Vector2(-800,-150)
+		angular_velocity = 45.0
+		enemy_picked = false
 
 var is_parried = false
 var parried_dir = Vector2(0,0)

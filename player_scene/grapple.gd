@@ -8,7 +8,6 @@ extends State
 @export var grapple_node : String = "grapple"
 @onready var hook = preload("res://projectiles/Chain.tscn")
 @onready var timer : Timer = $Timer
-@onready var ray : RayCast2D = $RayCast2D
 @export var player : Player
 
 func _ready(): 

@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqstixvm88jh1"]
+
+[ext_resource type="PackedScene" uid="uid://cdxatvosganh" path="res://level_scene/level.tscn" id="1_eqhio"]
+
+[node name="level" instance=ExtResource("1_eqhio")]
+
+[node name="player" parent="." index="2"]
+position = Vector2(446, -799)
+
+[node name="Camera2D" parent="." index="3"]
+position = Vector2(445, -798)
+
+[node name="enemy" parent="." index="4"]
+position = Vector2(-244, -731)
+
+[node name="brick" parent="." index="6"]
+position = Vector2(340, -173)
+collision_layer = 33
+
+[node name="player2" parent="." index="7"]
+visible = false
+position = Vector2(36, -1040)
+
+[node name="winplat" parent="." index="8" node_paths=PackedStringArray("timer", "timer2")]
+timer = NodePath("Timer")
+timer2 = NodePath("Timer2")
+
+[node name="Timer" parent="winplat" index="0"]
+wait_time = 7.555
+
+[node name="Timer2" parent="winplat" index="1"]
+wait_time = 7.005
+
+[node name="CollisionShape2D" parent="winplat" index="2"]
+position = Vector2(40, -1086)
+
+[node name="Label" parent="winplat/CollisionShape2D" index="0"]
+offset_left = 354.0
+offset_top = 84.0
+offset_right = 475.0
+offset_bottom = 112.0
+
+[node name="Label2" parent="winplat/CollisionShape2D" index="1"]
+offset_left = -643.0
+offset_top = 72.0
+offset_right = -502.0
+offset_bottom = 103.0
+
+[connection signal="body_exited" from="winplat" to="winplat" method="_on_body_exited"]
