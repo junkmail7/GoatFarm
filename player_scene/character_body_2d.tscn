@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://c4avhhmn1ds7r"]
+[gd_scene load_steps=103 format=3 uid="uid://c4avhhmn1ds7r"]
 
 [ext_resource type="Script" path="res://player_scene/character_body_2d.gd" id="1_8u4q0"]
 [ext_resource type="PackedScene" uid="uid://bvdj8i85hs41i" path="res://projectiles/Chain.tscn" id="2_dcwie"]
@@ -31,6 +31,7 @@
 [ext_resource type="Script" path="res://player_scene/parry_box.gd" id="28_qsit2"]
 [ext_resource type="Script" path="res://player_scene/CollisionShape2Dparry.gd" id="29_q24tl"]
 [ext_resource type="Script" path="res://player_scene/gib_hitbox.gd" id="30_4lha1"]
+[ext_resource type="Script" path="res://player_scene/GPUParticles2D.gd" id="32_70jir"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k45gd"]
 atlas = ExtResource("2_fo24g")
@@ -849,6 +850,44 @@ size = Vector2(20, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2w5w8"]
 
+[sub_resource type="Gradient" id="Gradient_qqiv5"]
+offsets = PackedFloat32Array(0, 0.949153)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nn0h4"]
+gradient = SubResource("Gradient_qqiv5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qgmpy"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+flatness = 1.0
+initial_velocity_min = 6.9
+initial_velocity_max = 6.9
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 2.0
+scale_max = 2.0
+color = Color(0.87451, 0.87451, 0.87451, 1)
+color_ramp = SubResource("GradientTexture1D_nn0h4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g4gp6"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 10, 1)
+particle_flag_disable_z = true
+spread = 66.1
+gravity = Vector3(-1, 0, 0)
+initial_velocity_max = 36.98
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 1.2
+scale_max = 2.5
+color = Color(0.6, 0, 0, 1)
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 66
 collision_mask = 65
@@ -871,7 +910,9 @@ shape = SubResource("CapsuleShape2D_808ju")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-3, -17)
-texture = ExtResource("4_v0lop")
+texture = ExtResource("3_wvd16")
+hframes = 8
+frame = 2
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_041h7")
@@ -884,16 +925,13 @@ libraries = {
 "": SubResource("AnimationLibrary_dowl5")
 }
 
-[node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
-offset_left = -10.0
-offset_top = -21.0
-offset_right = 30.0
-offset_bottom = 2.0
-script = ExtResource("12_yjvo6")
-state_machine = NodePath("../CharacterStateMachine")
-
-[node name="player_damageable" type="Node" parent="."]
+[node name="player_damageable" type="Node" parent="." node_paths=PackedStringArray("player", "timer")]
 script = ExtResource("12_vsdud")
+player = NodePath("..")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="player_damageable"]
+one_shot = true
 
 [node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animation_tree", "current_state")]
 script = ExtResource("6_iyar1")
@@ -901,19 +939,26 @@ character = NodePath("..")
 animation_tree = NodePath("../AnimationTree")
 current_state = NodePath("ground")
 
-[node name="ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "shoot_state", "grapple_state", "grab_state")]
+[node name="Reload" type="Timer" parent="CharacterStateMachine"]
+wait_time = 2.131
+one_shot = true
+
+[node name="ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "shoot_state", "grapple_state", "grab_state", "parry_state", "reload")]
 script = ExtResource("7_hwwbf")
 air_state = NodePath("../air")
 attack_state = NodePath("../attack")
 shoot_state = NodePath("../shoot")
 grapple_state = NodePath("../grapple")
 grab_state = NodePath("../grab")
+parry_state = NodePath("../parry")
+reload = NodePath("../Reload")
 
-[node name="air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state", "grapple_state", "shoot_state")]
+[node name="air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state", "grapple_state", "shoot_state", "reload")]
 script = ExtResource("10_33vt3")
 landing_state = NodePath("../land")
 grapple_state = NodePath("../grapple")
 shoot_state = NodePath("../shoot")
+reload = NodePath("../Reload")
 
 [node name="land" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("11_jtuqe")
@@ -950,12 +995,13 @@ player = NodePath("../..")
 [node name="Timer" type="Timer" parent="CharacterStateMachine/grapple"]
 wait_time = 0.335
 
-[node name="grappled" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "ground_state", "player", "shoot_state")]
+[node name="grappled" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "ground_state", "player", "shoot_state", "reload")]
 script = ExtResource("19_2p6fb")
 return_state = NodePath("../air")
 ground_state = NodePath("../ground")
 player = NodePath("../..")
 shoot_state = NodePath("../shoot")
+reload = NodePath("../Reload")
 
 [node name="grab" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state")]
 script = ExtResource("20_6rqfi")
@@ -1018,6 +1064,27 @@ script = ExtResource("30_4lha1")
 position = Vector2(0, -52)
 shape = SubResource("RectangleShape2D_2w5w8")
 
+[node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
+offset_left = -10.0
+offset_top = -21.0
+offset_right = 30.0
+offset_bottom = 2.0
+script = ExtResource("12_yjvo6")
+state_machine = NodePath("../CharacterStateMachine")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(0, 7)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_qgmpy")
+collision_base_size = 0.0
+script = ExtResource("32_70jir")
+player = NodePath("..")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+visible = false
+position = Vector2(0, -15)
+process_material = SubResource("ParticleProcessMaterial_g4gp6")
+
 [connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_character_body_2d_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="parry_box" method="_on_character_body_2d_facing_direction_changed"]
@@ -1029,6 +1096,10 @@ shape = SubResource("RectangleShape2D_2w5w8")
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grappled" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grab" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/parry" method="_on_animation_tree_animation_finished"]
+[connection signal="timeout" from="player_damageable/Timer" to="player_damageable" method="_on_timer_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/Reload" to="CharacterStateMachine/ground" method="_on_reload_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/Reload" to="CharacterStateMachine/air" method="_on_reload_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/Reload" to="CharacterStateMachine/grappled" method="_on_reload_timeout"]
 [connection signal="currently_shooting" from="CharacterStateMachine/shoot" to="." method="_on_shoot_currently_shooting"]
 [connection signal="timeout" from="CharacterStateMachine/hurt/Timer" to="CharacterStateMachine/hurt" method="_on_timer_timeout"]
 [connection signal="body_entered" from="atk_hitbox" to="atk_hitbox" method="_on_body_entered"]

@@ -1,4 +1,4 @@
-extends Label
+extends Control
 
 
 # Called when the node enters the scene tree for the first time.
@@ -8,10 +8,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if(score == 2):
-		get_tree().change_scene_to_file(("res://Screens/win1.tscn"))
+	pass
 
-var score = 0
-func _on_timer_timeout():
-	score+=1
-	text = str(score)
+
+func _on_quit_pressed():
+	get_tree().quit()
+
+
+func _on__player_pressed():
+	get_tree().change_scene_to_file(("res://level_scene/level_fr.tscn"))

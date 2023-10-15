@@ -22,6 +22,7 @@ func state_input(event : InputEvent):
 			timer.start()
 			
 func on_enter():
+		Global.p1_ammo -= 1
 		update_shooting(true)
 		var bullet = projectile.instantiate()	
 		bullet.set_global_position(get_parent().get_parent().get_global_position())
@@ -54,3 +55,4 @@ func _on_character_body_2d_facing_direction_changed(facing_right):
 	
 func update_shooting(shooting):
 	emit_signal("currently_shooting", shooting)
+

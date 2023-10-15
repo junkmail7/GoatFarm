@@ -22,6 +22,7 @@ func state_input(event : InputEvent):
 			timer.start()
 			
 func on_enter():
+		Global.p2_ammo -= 1
 		update_shooting(true)
 		var bullet = projectile.instantiate()	
 		bullet.set_global_position(get_parent().get_parent().get_global_position())

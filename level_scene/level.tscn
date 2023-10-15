@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cdxatvosganh"]
+[gd_scene load_steps=19 format=3 uid="uid://cdxatvosganh"]
 
 [ext_resource type="Texture2D" uid="uid://cmk28u6k8o0pr" path="res://gfx/web pics (1).png" id="1_1vd52"]
 [ext_resource type="PackedScene" uid="uid://c4avhhmn1ds7r" path="res://player_scene/character_body_2d.tscn" id="2_ap52n"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://level_scene/realcamera.gd" id="3_w3k1t"]
 [ext_resource type="PackedScene" uid="uid://khd0usbr3eol" path="res://UI/healthchangemanager.tscn" id="4_3fg3q"]
 [ext_resource type="PackedScene" uid="uid://d0koof6k8sdrl" path="res://items/brick.tscn" id="5_0ir03"]
-[ext_resource type="PackedScene" uid="uid://g6ijwpkm7pk1" path="res://p2/player_2.tscn" id="6_8eroo"]
 [ext_resource type="Script" path="res://level_scene/winplat.gd" id="8_013f0"]
 [ext_resource type="Script" path="res://level_scene/Label.gd" id="9_d8ydi"]
 [ext_resource type="Script" path="res://level_scene/Label2.gd" id="10_pdemq"]
@@ -56,6 +55,13 @@ sources/1 = SubResource("TileSetAtlasSource_hvtqt")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhho5"]
 size = Vector2(557, 488)
 
+[sub_resource type="Gradient" id="Gradient_b2bpk"]
+offsets = PackedFloat32Array(0.554688, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vctxr"]
+gradient = SubResource("Gradient_b2bpk")
+fill_to = Vector2(0.410256, 0.632479)
+
 [node name="level" type="Node2D"]
 
 [node name="stage_ground" type="StaticBody2D" parent="."]
@@ -72,9 +78,15 @@ layer_0/tile_data = PackedInt32Array(196594, 1, 0, 196595, 65537, 0, 196596, 131
 [node name="player" parent="." instance=ExtResource("2_ap52n")]
 position = Vector2(305, -51)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("timer", "shake_timer")]
 position = Vector2(-482, -318)
 script = ExtResource("3_w3k1t")
+timer = NodePath("Timer")
+shake_timer = NodePath("Shake_timer")
+
+[node name="Timer" type="Timer" parent="Camera2D"]
+
+[node name="Shake_timer" type="Timer" parent="Camera2D"]
 
 [node name="enemy" parent="." instance=ExtResource("3_jb5w1")]
 position = Vector2(-131, -19)
@@ -84,9 +96,6 @@ position = Vector2(-131, -19)
 [node name="brick" parent="." instance=ExtResource("5_0ir03")]
 position = Vector2(348, -123)
 physics_material_override = SubResource("PhysicsMaterial_w4ahw")
-
-[node name="player2" parent="." instance=ExtResource("6_8eroo")]
-position = Vector2(-537, -952)
 
 [node name="winplat" type="Area2D" parent="."]
 collision_layer = 7
@@ -132,6 +141,11 @@ offset_top = -902.0
 offset_right = -570.0
 offset_bottom = -761.0
 script = ExtResource("12_otr00")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-16.5, -821.75)
+scale = Vector2(11.2656, 1.49219)
+texture = SubResource("GradientTexture2D_vctxr")
 
 [connection signal="body_entered" from="winplat" to="winplat" method="_on_body_entered"]
 [connection signal="timeout" from="winplat/Timer" to="Label" method="_on_timer_timeout"]

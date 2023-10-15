@@ -8,7 +8,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if(score == 2):
+		get_tree().change_scene_to_file(("res://Screens/win1.tscn"))
 
 var score = 0
 func _on_timer_2_timeout():

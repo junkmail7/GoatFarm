@@ -8,6 +8,7 @@ extends State
 @export var shoot_state : State
 @export var shoot_animation : String = "shoot"
 
+@export var reload : Timer
 
 func _ready(): #get grapple states - kinda fucked rn will come back.
 	enemy.connect("character_hooked", _grapple)
@@ -31,7 +32,15 @@ func _grapple(hooked):
 	
 func state_input(event : InputEvent):
 	if(event.is_action_pressed("p2_shoot")):
-		print("shit pressed")
-		next_state = shoot_state
-		playback.travel(shoot_animation)
+		if(Global.p2_ammo <= 0 && reload.is_stopped()):
+			reload.start()
+			print("start relaod")
+		elif(Global.p2_ammo > 0):
+			Global.camera.shake(0.1,10)
+			next_state = shoot_state		
+			playback.travel(shoot_animation)
 
+
+
+func _on_reload_timeout():
+	Global.p2_ammo = 2

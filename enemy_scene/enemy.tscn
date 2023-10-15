@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://dt47cwh8xk6g7"]
+[gd_scene load_steps=88 format=3 uid="uid://dt47cwh8xk6g7"]
 
 [ext_resource type="Texture2D" uid="uid://1yxa27njlk1i" path="res://gfx/snail/walk-Sheet.png" id="1_e8kta"]
 [ext_resource type="Script" path="res://enemy_scene/enemy.gd" id="1_iwda7"]
@@ -31,6 +31,7 @@
 [ext_resource type="Script" path="res://enemy_scene/CollisionShape2Denemy.gd" id="15_hmtih"]
 [ext_resource type="Script" path="res://enemy_scene/grab.gd" id="19_fym62"]
 [ext_resource type="Script" path="res://enemy_scene/statedebug.gd" id="19_lc8wb"]
+[ext_resource type="Script" path="res://enemy_scene/GPUParticles2D.gd" id="32_u5yag"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8j6j5"]
 size = Vector2(50, 45)
@@ -625,6 +626,20 @@ size = Vector2(29.375, 77)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_outy1"]
 size = Vector2(25.25, 27.75)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ggq62"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 10, 0)
+particle_flag_disable_z = true
+spread = 180.0
+flatness = 0.21
+gravity = Vector3(-30, -5, 0)
+initial_velocity_max = 36.69
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 1.3
+scale_max = 2.1
+color = Color(0.619608, 0, 0, 1)
+
 [node name="snail" type="CharacterBody2D" node_paths=PackedStringArray("hit_state")]
 collision_layer = 68
 collision_mask = 65
@@ -644,6 +659,7 @@ shape = SubResource("RectangleShape2D_8j6j5")
 position = Vector2(14, -15)
 scale = Vector2(1.2092, 1.3172)
 texture = ExtResource("1_e8kta")
+hframes = 8
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_getw7")
@@ -654,8 +670,13 @@ libraries = {
 "": SubResource("AnimationLibrary_him4k")
 }
 
-[node name="damageable" type="Node" parent="."]
+[node name="damageable" type="Node" parent="." node_paths=PackedStringArray("enemy", "timer")]
 script = ExtResource("2_228qt")
+enemy = NodePath("..")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="damageable"]
+one_shot = true
 
 [node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "animation_tree", "current_state")]
 script = ExtResource("4_juha1")
@@ -663,7 +684,7 @@ character = NodePath("..")
 animation_tree = NodePath("../AnimationTree")
 current_state = NodePath("ground")
 
-[node name="ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "shoot_state", "grapple_state", "grab_state", "parry_state")]
+[node name="ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "shoot_state", "grapple_state", "grab_state", "parry_state", "reload")]
 script = ExtResource("5_ow5nu")
 air_state = NodePath("../air")
 attack_state = NodePath("../attack")
@@ -671,16 +692,18 @@ shoot_state = NodePath("../shoot")
 grapple_state = NodePath("../grapple")
 grab_state = NodePath("../grab")
 parry_state = NodePath("../parry")
+reload = NodePath("../reload")
 
 [node name="land" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("15_1qgjl")
 ground_state = NodePath("../ground")
 
-[node name="air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state", "grapple_state", "shoot_state")]
+[node name="air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state", "grapple_state", "shoot_state", "reload")]
 script = ExtResource("11_sp46s")
 landing_state = NodePath("../land")
 grapple_state = NodePath("../grapple")
 shoot_state = NodePath("../shoot")
+reload = NodePath("../reload")
 
 [node name="attack" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state")]
 script = ExtResource("9_ufui0")
@@ -713,13 +736,14 @@ enemy = NodePath("../..")
 wait_time = 0.383
 one_shot = true
 
-[node name="grappled" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "ground_state", "enemy", "shoot_state")]
+[node name="grappled" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "ground_state", "enemy", "shoot_state", "reload")]
 script = ExtResource("14_6c76h")
 return_state = NodePath("../ground")
 return_animation_node = "walk"
 ground_state = NodePath("../ground")
 enemy = NodePath("../..")
 shoot_state = NodePath("../shoot")
+reload = NodePath("../reload")
 
 [node name="grab" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state")]
 script = ExtResource("19_fym62")
@@ -745,6 +769,8 @@ one_shot = true
 script = ExtResource("6_1rxyc")
 dead_state = NodePath(".")
 can_move = false
+
+[node name="reload" type="Timer" parent="CharacterStateMachine"]
 
 [node name="atk_box" type="Area2D" parent="." node_paths=PackedStringArray("enemy", "facing_collision_shape")]
 collision_layer = 2
@@ -794,6 +820,14 @@ offset_bottom = 40.0
 script = ExtResource("19_lc8wb")
 state_machine = NodePath("../CharacterStateMachine")
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." node_paths=PackedStringArray("enemy", "hurt_state")]
+position = Vector2(4, -10)
+process_material = SubResource("ParticleProcessMaterial_ggq62")
+collision_base_size = 0.0
+script = ExtResource("32_u5yag")
+enemy = NodePath("..")
+hurt_state = NodePath("../CharacterStateMachine/hurt")
+
 [connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_snail_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="atk_box" method="_on_snail_facing_direction_changed"]
@@ -805,9 +839,13 @@ state_machine = NodePath("../CharacterStateMachine")
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grapple" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grab" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/parry" method="_on_animation_tree_animation_finished"]
+[connection signal="timeout" from="damageable/Timer" to="damageable" method="_on_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/attack/Timer" to="atk_box" method="_on_timer_timeout"]
 [connection signal="currently_shooting" from="CharacterStateMachine/shoot" to="." method="_on_shoot_currently_shooting"]
 [connection signal="timeout" from="CharacterStateMachine/hurt/Timer" to="CharacterStateMachine/hurt" method="_on_timer_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/reload" to="CharacterStateMachine/ground" method="_on_reload_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/reload" to="CharacterStateMachine/air" method="_on_reload_timeout"]
+[connection signal="timeout" from="CharacterStateMachine/reload" to="CharacterStateMachine/grappled" method="_on_reload_timeout"]
 [connection signal="body_entered" from="atk_box" to="atk_box" method="_on_body_entered"]
 [connection signal="area_shape_entered" from="parry_hitbox" to="parry_hitbox" method="_on_area_shape_entered"]
 [connection signal="body_entered" from="parry_hitbox" to="parry_hitbox" method="_on_body_entered"]

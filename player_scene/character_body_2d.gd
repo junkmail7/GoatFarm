@@ -3,8 +3,8 @@ extends CharacterBody2D
 class_name Player
 
 @export var speed : float = 350.0
-@export var friction : float = 270.0
-@export var acceleration : float = 350.0
+@export var friction : float = 400.0
+@export var acceleration : float = 370.0
 
 
 @onready var sprite : Sprite2D = $Sprite2D
@@ -76,6 +76,7 @@ func _input(event: InputEvent) -> void:
 
 func _ready():
 	animation_tree.active = true
+	Global.p1_ammo = 2
 
 func _physics_process(delta):
 	#print(smartguy)
@@ -87,11 +88,11 @@ func _physics_process(delta):
 	
 	if direction.x != 0 && state_machine.check_if_can_move():
 		velocity.x = move_toward(velocity.x, speed * direction.x, acceleration * delta)
-	elif(smartguy == true) && (face_dir == true):
-		velocity += Vector2(-20,-5)
+	elif(smartguy == true) && (face_dir == true): ## bullet knockback
+		velocity += Vector2(-15,-5)
 		smartguy == false
 	elif(smartguy == true) && (face_dir == false):
-		velocity += Vector2(20,-5)
+		velocity += Vector2(15,-5)
 		smartguy == false
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction * delta)

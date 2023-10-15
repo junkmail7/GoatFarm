@@ -63,6 +63,7 @@ func _input(event: InputEvent) -> void:
 
 func _ready():
 	animation_tree.active = true
+	Global.p2_ammo = 2
 		
 func _physics_process(delta):
 	#print(smartguy)

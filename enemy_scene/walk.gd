@@ -16,6 +16,8 @@ class_name p2GroundState
 @export var parry_state : State
 @export var parry_animation : String = "parry"
 
+@export var reload : Timer
+
 func state_process(delta):
 	if(!character.is_on_floor()):
 		next_state = air_state
@@ -44,8 +46,13 @@ func attack():
 	playback.travel(attack_animation)
 
 func shoot():
-	next_state = shoot_state
-	playback.travel(shoot_animation)
+	if(Global.p2_ammo <= 0 && reload.is_stopped()):
+		reload.start()
+		print("start relaod")
+	elif(Global.p2_ammo > 0):
+		Global.camera.shake(0.1,10)
+		next_state = shoot_state		
+		playback.travel(shoot_animation)
 #
 func grapple():
 	next_state = grapple_state
@@ -58,3 +65,7 @@ func grab():
 func parry():
 	next_state = parry_state
 	playback.travel(parry_animation)
+
+
+func _on_reload_timeout():
+	Global.p2_ammo = 2
