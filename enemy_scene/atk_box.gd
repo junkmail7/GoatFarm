@@ -8,7 +8,7 @@ func _ready():
 	print(enemy)
 	print(get_owner())
 	monitoring = false
-	enemy.connect("facing_direction_changed", _on_snail_facing_direction_changed)
+	#enemy.connect("facing_direction_changed", _on_snail_facing_direction_changed)
 	
 func _on_body_entered(body):
 	print(monitoring)

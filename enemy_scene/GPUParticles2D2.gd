@@ -1,6 +1,6 @@
 extends GPUParticles2D
-@export var player : Player
-@export var hurt_state : State
+@export var enemy : Enemy
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -8,14 +8,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#print(get_parent().current_state)
-	if(get_parent().current_state == hurt_state):
+	if enemy && enemy.is_on_floor() && ((enemy.velocity.x > 150)||(enemy.velocity.x < -150)):
 		self.emitting = true
 	else:
 		self.emitting = false
-
-	if player.face_dir == true:
+		
+	if enemy.face_dir == true:
 		self.process_material.set("direction", Vector3(1, 1, 0))
 	else:
 		self.process_material.set("direction", Vector3(-1, 1, 0))
-

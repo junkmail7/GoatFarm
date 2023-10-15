@@ -45,10 +45,13 @@ func _on_body_entered(body):
 			var damage = 6
 			if(direction_sign > 0):
 				child.hit(damage, Vector2.RIGHT)
+				queue_free()
 			elif(direction_sign < 0):
 				child.hit(damage, Vector2.LEFT)
+				queue_free()
 			else:
 				child.hit(damage, Vector2.UP)
+				queue_free()
 				
 var is_parried = false
 var parried_dir = Vector2(0,0)

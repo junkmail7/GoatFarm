@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var links = $Links	
 #@onready var tip : Vector2 = $Tip
-@onready var sprite : Sprite2D = $hook
+#@onready var sprite : Sprite2D = $hook
 @onready var timer : Timer = $Timer
 
 	# A slightly easier reference to the links

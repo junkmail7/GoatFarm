@@ -5,7 +5,7 @@ extends Area2D
 
 func _ready():
 	monitoring = false
-	player.connect("facing_direction_changed", _on_character_body_2d_facing_direction_changed)
+	#player.connect("facing_direction_changed", _on_character_body_2d_facing_direction_changed)
 
 func _on_body_entered(body):
 	#print(body)
