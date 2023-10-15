@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://c4avhhmn1ds7r"]
+[gd_scene load_steps=116 format=3 uid="uid://c4avhhmn1ds7r"]
 
 [ext_resource type="Script" path="res://player_scene/character_body_2d.gd" id="1_8u4q0"]
 [ext_resource type="PackedScene" uid="uid://bvdj8i85hs41i" path="res://projectiles/Chain.tscn" id="2_dcwie"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://di0bq1frnb3ng" path="res://gfx/Attack-01-Sheet.png" id="3_wvd16"]
 [ext_resource type="Texture2D" uid="uid://d04fiw1bxx34p" path="res://gfx/misc/1174183.png" id="4_rgajq"]
 [ext_resource type="Texture2D" uid="uid://ccfyw4vk8pthx" path="res://gfx/p1_par.png" id="4_v0lop"]
+[ext_resource type="Texture2D" uid="uid://deiook4k7mqvj" path="res://gfx/idle_2.png" id="4_xgu6c"]
 [ext_resource type="Texture2D" uid="uid://b3nmvt3w2epgs" path="res://gfx/Jump-Start-Sheet.png" id="6_0a3b1"]
 [ext_resource type="Texture2D" uid="uid://c7qd7n4ofpckg" path="res://gfx/gibb.png" id="6_gpe3c"]
 [ext_resource type="Script" path="res://player_scene/CharacterStateMachine.gd" id="6_iyar1"]
@@ -33,6 +34,9 @@
 [ext_resource type="Script" path="res://player_scene/gib_hitbox.gd" id="30_4lha1"]
 [ext_resource type="Script" path="res://player_scene/GPUParticles2D.gd" id="32_70jir"]
 [ext_resource type="Script" path="res://player_scene/GPUParticles2D2.gd" id="33_yg82s"]
+[ext_resource type="AudioStream" uid="uid://chud1ic0gmsue" path="res://sfx/shoot.wav" id="34_4tlny"]
+[ext_resource type="Script" path="res://player_scene/shoot_fx.gd" id="35_nwgjo"]
+[ext_resource type="AudioStream" uid="uid://dup1xbwjmma6k" path="res://sfx/reload.wav" id="36_12lhv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k45gd"]
 atlas = ExtResource("2_fo24g")
@@ -211,6 +215,9 @@ animation = &"grapple"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m4m2j"]
 animation = &"grappled"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_upbem"]
+animation = &"idle_2"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6jcdb"]
 animation = &"jump_end"
 
@@ -224,7 +231,6 @@ animation = &"parry"
 animation = &"shoot"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rm4y6"]
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vt75g"]
 
@@ -268,11 +274,13 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lnbl3"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ejvy8"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_041h7"]
 states/End/position = Vector2(899, 143)
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_ewhhk")
 states/Move/position = Vector2(219, 143)
-states/Start/position = Vector2(-44, 143)
+states/Start/position = Vector2(-565, 143)
 states/attack1/node = SubResource("AnimationNodeAnimation_n4ipl")
 states/attack1/position = Vector2(219, 240)
 states/dead/node = SubResource("AnimationNodeAnimation_dotmd")
@@ -283,6 +291,8 @@ states/grapple/node = SubResource("AnimationNodeAnimation_0iyta")
 states/grapple/position = Vector2(375, 72)
 states/grappled/node = SubResource("AnimationNodeAnimation_m4m2j")
 states/grappled/position = Vector2(522, 0)
+states/idle_2/node = SubResource("AnimationNodeAnimation_upbem")
+states/idle_2/position = Vector2(-243.5, 245)
 states/jump_end/node = SubResource("AnimationNodeAnimation_6jcdb")
 states/jump_end/position = Vector2(27, 0)
 states/jump_start/node = SubResource("AnimationNodeAnimation_bhwqg")
@@ -291,8 +301,8 @@ states/parry/node = SubResource("AnimationNodeAnimation_cwixa")
 states/parry/position = Vector2(353.5, 269)
 states/shoot/node = SubResource("AnimationNodeAnimation_x8bia")
 states/shoot/position = Vector2(522, 245)
-transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_rm4y6"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vt75g"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_3c5lr"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_gd5lc"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_q0a14"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_k5jup"), "Move", "shoot", SubResource("AnimationNodeStateMachineTransition_oxcmv"), "shoot", "Move", SubResource("AnimationNodeStateMachineTransition_0gxak"), "Move", "grapple", SubResource("AnimationNodeStateMachineTransition_n4sn1"), "jump_start", "grapple", SubResource("AnimationNodeStateMachineTransition_as2a6"), "grapple", "jump_start", SubResource("AnimationNodeStateMachineTransition_2dpok"), "grapple", "Move", SubResource("AnimationNodeStateMachineTransition_uce3k"), "shoot", "grappled", SubResource("AnimationNodeStateMachineTransition_nijxh"), "grappled", "shoot", SubResource("AnimationNodeStateMachineTransition_2lkct"), "grapple", "grappled", SubResource("AnimationNodeStateMachineTransition_6had0"), "grappled", "jump_start", SubResource("AnimationNodeStateMachineTransition_sn16g"), "Move", "grabitem", SubResource("AnimationNodeStateMachineTransition_idupb"), "grabitem", "Move", SubResource("AnimationNodeStateMachineTransition_iwlwf"), "Move", "parry", SubResource("AnimationNodeStateMachineTransition_gfh2g"), "parry", "Move", SubResource("AnimationNodeStateMachineTransition_2eqyx"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_lnbl3")]
-graph_offset = Vector2(-198.5, -21)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_rm4y6"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vt75g"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_3c5lr"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_gd5lc"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_q0a14"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_k5jup"), "Move", "shoot", SubResource("AnimationNodeStateMachineTransition_oxcmv"), "shoot", "Move", SubResource("AnimationNodeStateMachineTransition_0gxak"), "Move", "grapple", SubResource("AnimationNodeStateMachineTransition_n4sn1"), "jump_start", "grapple", SubResource("AnimationNodeStateMachineTransition_as2a6"), "grapple", "jump_start", SubResource("AnimationNodeStateMachineTransition_2dpok"), "grapple", "Move", SubResource("AnimationNodeStateMachineTransition_uce3k"), "shoot", "grappled", SubResource("AnimationNodeStateMachineTransition_nijxh"), "grappled", "shoot", SubResource("AnimationNodeStateMachineTransition_2lkct"), "grapple", "grappled", SubResource("AnimationNodeStateMachineTransition_6had0"), "grappled", "jump_start", SubResource("AnimationNodeStateMachineTransition_sn16g"), "Move", "grabitem", SubResource("AnimationNodeStateMachineTransition_idupb"), "grabitem", "Move", SubResource("AnimationNodeStateMachineTransition_iwlwf"), "Move", "parry", SubResource("AnimationNodeStateMachineTransition_gfh2g"), "parry", "Move", SubResource("AnimationNodeStateMachineTransition_2eqyx"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_lnbl3"), "Start", "idle_2", SubResource("AnimationNodeStateMachineTransition_ejvy8")]
+graph_offset = Vector2(-647.5, 110)
 
 [sub_resource type="Animation" id="Animation_ea731"]
 length = 0.5
@@ -828,6 +838,46 @@ tracks/2/keys = {
 "values": [8]
 }
 
+[sub_resource type="Animation" id="Animation_yx6bf"]
+resource_name = "idle_2"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_xgu6c")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 2, 2, 2, 2]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dowl5"]
 _data = {
 "RESET": SubResource("Animation_ea731"),
@@ -838,12 +888,41 @@ _data = {
 "grapple": SubResource("Animation_12coh"),
 "grappled": SubResource("Animation_1tlav"),
 "idle": SubResource("Animation_7m76s"),
+"idle_2": SubResource("Animation_yx6bf"),
 "jump_end": SubResource("Animation_66sxm"),
 "jump_start": SubResource("Animation_cppde"),
 "parry": SubResource("Animation_ljpau"),
 "run": SubResource("Animation_1sedh"),
 "shoot": SubResource("Animation_vbwcb")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_taclr"]
+size = Vector2(17.5, 53.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgc12"]
+size = Vector2(20, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2w5w8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ik0sh"]
+
+[sub_resource type="Gradient" id="Gradient_ivmuo"]
+offsets = PackedFloat32Array(0, 0.540323, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kpgfo"]
+gradient = SubResource("Gradient_ivmuo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5bwi7"]
+lifetime_randomness = 0.46
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(25, 0, 0)
+initial_velocity_min = 27.4
+initial_velocity_max = 76.04
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color_ramp = SubResource("GradientTexture1D_kpgfo")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g4gp6"]
 emission_shape = 3
@@ -857,14 +936,6 @@ orbit_velocity_max = 0.0
 scale_min = 1.2
 scale_max = 2.5
 color = Color(0.6, 0, 0, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_taclr"]
-size = Vector2(17.5, 53.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgc12"]
-size = Vector2(20, 54)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2w5w8"]
 
 [sub_resource type="Gradient" id="Gradient_qqiv5"]
 offsets = PackedFloat32Array(0, 0.949153)
@@ -898,9 +969,6 @@ script = ExtResource("1_8u4q0")
 
 [node name="Chain" parent="." instance=ExtResource("2_dcwie")]
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(0, -120)
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(12, -30)
@@ -920,7 +988,7 @@ frame = 2
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_041h7")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Move/blend_position = -0.143345
+parameters/Move/blend_position = 0.00155759
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
@@ -946,7 +1014,7 @@ current_state = NodePath("ground")
 wait_time = 2.131
 one_shot = true
 
-[node name="ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "shoot_state", "grapple_state", "grab_state", "parry_state", "reload")]
+[node name="ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "attack_state", "shoot_state", "grapple_state", "grab_state", "parry_state", "reload_sound", "reload")]
 script = ExtResource("7_hwwbf")
 air_state = NodePath("../air")
 attack_state = NodePath("../attack")
@@ -954,6 +1022,7 @@ shoot_state = NodePath("../shoot")
 grapple_state = NodePath("../grapple")
 grab_state = NodePath("../grab")
 parry_state = NodePath("../parry")
+reload_sound = NodePath("../../reload")
 reload = NodePath("../Reload")
 
 [node name="air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state", "grapple_state", "shoot_state", "reload")]
@@ -977,11 +1046,12 @@ can_move = false
 wait_time = 0.254
 one_shot = true
 
-[node name="shoot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "grappled_state", "player")]
+[node name="shoot" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("return_state", "grappled_state", "player", "gunshot")]
 script = ExtResource("13_hjeen")
 return_state = NodePath("../ground")
 grappled_state = NodePath("../grappled")
 player = NodePath("../..")
+gunshot = NodePath("../../gunshot")
 can_move = false
 
 [node name="Timer" type="Timer" parent="CharacterStateMachine/shoot"]
@@ -1029,13 +1099,6 @@ one_shot = true
 script = ExtResource("23_jv344")
 dead_state = NodePath(".")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="CharacterStateMachine" node_paths=PackedStringArray("player", "hurt_state")]
-position = Vector2(0, -15)
-process_material = SubResource("ParticleProcessMaterial_g4gp6")
-script = ExtResource("33_yg82s")
-player = NodePath("../..")
-hurt_state = NodePath("../hurt")
-
 [node name="atk_hitbox" type="Area2D" parent="." node_paths=PackedStringArray("player", "facing_collision_shape")]
 collision_layer = 4
 collision_mask = 4
@@ -1082,6 +1145,32 @@ offset_bottom = 2.0
 script = ExtResource("12_yjvo6")
 state_machine = NodePath("../CharacterStateMachine")
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -120)
+
+[node name="throw_r" type="Marker2D" parent="."]
+position = Vector2(47, -57)
+
+[node name="throw_l" type="Marker2D" parent="."]
+position = Vector2(-53, -58)
+
+[node name="shoot_fx" type="GPUParticles2D" parent="." node_paths=PackedStringArray("player", "shoot_state")]
+material = SubResource("ShaderMaterial_ik0sh")
+position = Vector2(0, -20)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_5bwi7")
+explosiveness = 1.0
+script = ExtResource("35_nwgjo")
+player = NodePath("..")
+shoot_state = NodePath("../CharacterStateMachine/shoot")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." node_paths=PackedStringArray("player", "hurt_state")]
+position = Vector2(0, -15)
+process_material = SubResource("ParticleProcessMaterial_g4gp6")
+script = ExtResource("33_yg82s")
+player = NodePath("..")
+hurt_state = NodePath("../CharacterStateMachine/hurt")
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 7)
 amount = 20
@@ -1089,6 +1178,12 @@ process_material = SubResource("ParticleProcessMaterial_qgmpy")
 collision_base_size = 0.0
 script = ExtResource("32_70jir")
 player = NodePath("..")
+
+[node name="gunshot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("34_4tlny")
+
+[node name="reload" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("36_12lhv")
 
 [connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_character_body_2d_facing_direction_changed"]

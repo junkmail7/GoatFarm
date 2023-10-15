@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://dt47cwh8xk6g7"]
+[gd_scene load_steps=100 format=3 uid="uid://dt47cwh8xk6g7"]
 
 [ext_resource type="Texture2D" uid="uid://1yxa27njlk1i" path="res://gfx/snail/walk-Sheet.png" id="1_e8kta"]
 [ext_resource type="Script" path="res://enemy_scene/enemy.gd" id="1_iwda7"]
@@ -32,7 +32,12 @@
 [ext_resource type="Script" path="res://enemy_scene/grab.gd" id="19_fym62"]
 [ext_resource type="Script" path="res://enemy_scene/statedebug.gd" id="19_lc8wb"]
 [ext_resource type="Script" path="res://enemy_scene/GPUParticles2D.gd" id="32_u5yag"]
+[ext_resource type="PackedScene" uid="uid://6jambl36pp8q" path="res://gfx/hit_fx_scene/node_2d.tscn" id="32_x8ouk"]
+[ext_resource type="Script" path="res://enemy_scene/hit_fx.gd" id="33_tfapl"]
 [ext_resource type="Script" path="res://enemy_scene/GPUParticles2D2.gd" id="33_ypkfs"]
+[ext_resource type="Script" path="res://enemy_scene/shootfx.gd" id="34_hpv3u"]
+[ext_resource type="AudioStream" uid="uid://cwy0l4q5ves0f" path="res://sfx/woodbat.wav" id="37_4wtur"]
+[ext_resource type="Script" path="res://enemy_scene/hit_sfx.gd" id="38_7jlgn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8j6j5"]
 size = Vector2(50, 45)
@@ -658,6 +663,24 @@ scale_min = 2.0
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_v5hpm")
 
+[sub_resource type="Gradient" id="Gradient_a4vti"]
+offsets = PackedFloat32Array(0.193548, 0.556452, 1)
+colors = PackedColorArray(0.548387, 0.548387, 0.548387, 1, 0, 0, 0, 0.768627, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_njw0e"]
+gradient = SubResource("Gradient_a4vti")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xocwj"]
+lifetime_randomness = 0.49
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(10, 0, 0)
+initial_velocity_min = 27.0
+initial_velocity_max = 70.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color_ramp = SubResource("GradientTexture1D_njw0e")
+
 [node name="snail" type="CharacterBody2D" node_paths=PackedStringArray("hit_state")]
 collision_layer = 68
 collision_mask = 65
@@ -665,9 +688,6 @@ script = ExtResource("1_iwda7")
 hit_state = NodePath("CharacterStateMachine/hurt")
 
 [node name="chain" parent="." instance=ExtResource("2_b8ly0")]
-
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(9, -110)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(14, -6.5)
@@ -820,7 +840,7 @@ facing_left_position = Vector2(-22, -11.5)
 facing_right_position = Vector2(56, -11.5)
 
 [node name="gib_box" type="Area2D" parent="."]
-position = Vector2(-7, 0)
+position = Vector2(-7, -15)
 collision_layer = 17
 collision_mask = 17
 script = ExtResource("13_1ex7o")
@@ -839,8 +859,20 @@ offset_bottom = 40.0
 script = ExtResource("19_lc8wb")
 state_machine = NodePath("../CharacterStateMachine")
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(9, -110)
+
+[node name="hit_fx" parent="." node_paths=PackedStringArray("enemy", "hurt_state") instance=ExtResource("32_x8ouk")]
+scale = Vector2(0.2, 0.2)
+frame = 9
+frame_progress = 0.87116
+script = ExtResource("33_tfapl")
+enemy = NodePath("..")
+hurt_state = NodePath("../CharacterStateMachine/hurt")
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." node_paths=PackedStringArray("enemy", "hurt_state")]
 position = Vector2(4, -10)
+amount = 20
 process_material = SubResource("ParticleProcessMaterial_ggq62")
 collision_base_size = 0.0
 script = ExtResource("32_u5yag")
@@ -853,6 +885,26 @@ process_material = SubResource("ParticleProcessMaterial_igk1r")
 script = ExtResource("33_ypkfs")
 enemy = NodePath("..")
 
+[node name="shootfx" type="GPUParticles2D" parent="." node_paths=PackedStringArray("enemy", "shoot_state")]
+position = Vector2(0, -10)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_xocwj")
+lifetime = 0.87
+explosiveness = 1.0
+script = ExtResource("34_hpv3u")
+enemy = NodePath("..")
+shoot_state = NodePath("../CharacterStateMachine/shoot")
+
+[node name="hit_sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("37_4wtur")
+script = ExtResource("38_7jlgn")
+
+[node name="throw_r" type="Marker2D" parent="."]
+position = Vector2(54, -62)
+
+[node name="throw_l" type="Marker2D" parent="."]
+position = Vector2(-30, -60)
+
 [connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_snail_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="atk_box" method="_on_snail_facing_direction_changed"]
@@ -864,6 +916,8 @@ enemy = NodePath("..")
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grapple" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/grab" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/parry" method="_on_animation_tree_animation_finished"]
+[connection signal="on_hit" from="damageable" to="hit_fx" method="_on_damageable_on_hit"]
+[connection signal="on_hit" from="damageable" to="hit_sfx" method="_on_damageable_on_hit"]
 [connection signal="timeout" from="damageable/Timer" to="damageable" method="_on_timer_timeout"]
 [connection signal="timeout" from="CharacterStateMachine/attack/Timer" to="atk_box" method="_on_timer_timeout"]
 [connection signal="currently_shooting" from="CharacterStateMachine/shoot" to="." method="_on_shoot_currently_shooting"]
@@ -877,3 +931,4 @@ enemy = NodePath("..")
 [connection signal="body_entered" from="gib_box" to="gib_box" method="_on_body_entered"]
 [connection signal="gibbed" from="gib_box" to="damageable" method="_on_gib_box_gibbed"]
 [connection signal="gibbed" from="gib_box" to="CharacterStateMachine/dead" method="_on_gib_box_gibbed"]
+[connection signal="animation_finished" from="hit_fx" to="hit_fx" method="_on_animation_finished"]

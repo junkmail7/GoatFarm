@@ -15,7 +15,7 @@ class_name GroundState
 @export var grab_animation : String = "grabitem"
 @export var parry_state : State
 @export var parry_animation : String = "parry"
-
+@export var reload_sound : AudioStreamPlayer2D
 @export var reload : Timer
 
 func state_process(delta):
@@ -49,6 +49,7 @@ func shoot():
 	print(Global.p1_ammo)
 	if(Global.p1_ammo <= 0 && reload.is_stopped()):
 		reload.start()
+		reload_sound.play()
 		print("start relaod")
 	elif(Global.p1_ammo > 0):
 		Global.camera.shake(0.1,10)

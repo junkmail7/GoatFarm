@@ -8,6 +8,7 @@ extends State
 @onready var projectile = preload("res://projectiles/node_2d.tscn")
 @onready var timer : Timer = $Timer
 @export var player : Player
+@export var gunshot : AudioStreamPlayer2D
 
 signal currently_shooting(shooting : bool)
 
@@ -22,6 +23,7 @@ func state_input(event : InputEvent):
 			timer.start()
 			
 func on_enter():
+		gunshot.play()
 		Global.p1_ammo -= 1
 		update_shooting(true)
 		var bullet = projectile.instantiate()	

@@ -16,4 +16,4 @@ func _on_quit_pressed():
 
 
 func _on__player_pressed():
-	get_tree().change_scene_to_file(("res://level_scene/level_fr.tscn"))
+	get_tree().change_scene_to_file(("res://Screens/player_select.tscn"))

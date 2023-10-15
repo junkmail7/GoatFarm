@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqstixvm88jh1"]
+[gd_scene load_steps=3 format=3 uid="uid://dqstixvm88jh1"]
 
 [ext_resource type="PackedScene" uid="uid://cdxatvosganh" path="res://level_scene/level.tscn" id="1_eqhio"]
+[ext_resource type="AudioStream" uid="uid://b6ujxsdp40a7k" path="res://music/demogfarmsong - Copy.wav" id="2_5cy3r"]
 
 [node name="level" instance=ExtResource("1_eqhio")]
 
@@ -48,6 +49,10 @@ offset_left = -643.0
 offset_top = 72.0
 offset_right = -502.0
 offset_bottom = 103.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="11"]
+stream = ExtResource("2_5cy3r")
+autoplay = true
 
 [connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]
 [connection signal="timeout" from="Camera2D/Shake_timer" to="Camera2D" method="_on_shake_timer_timeout"]

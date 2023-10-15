@@ -6,9 +6,16 @@ var enemy_picked = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if picked == true:
-		self.position = get_node("../player/Marker2D").global_position
+		if (get_node("../player").face_dir):
+			self.position = get_node("../player/throw_r").global_position
+		else:
+			self.position = get_node("../player/throw_l").global_position
+
 	if enemy_picked == true:
-		self.position = get_node("../enemy/Marker2D").global_position
+		if (get_node("../enemy").face_dir):
+			self.position = get_node("../enemy/throw_r").global_position
+		else:
+			self.position = get_node("../enemy/throw_l").global_position
 	if is_parried:
 		linear_velocity = parried_dir * 800
 		is_parried = false		
@@ -21,12 +28,10 @@ func _input(event):
 			if body.name == "player" and get_node("../player").can_grab == true:
 				picked = true
 	if Input.is_action_just_pressed("release") && picked == true && (get_node("../player").face_dir == true):
-		print()
 		linear_velocity = Vector2(800,-100)
 		angular_velocity = 45.0
 		picked = false
 	if Input.is_action_just_pressed("release") && picked == true && (get_node("../player").face_dir == false):
-		print()
 		linear_velocity = Vector2(-800,-150)
 		angular_velocity = 45.0
 		picked = false

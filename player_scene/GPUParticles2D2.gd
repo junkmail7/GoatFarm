@@ -9,7 +9,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#print(get_parent().current_state)
-	if(get_parent().current_state == hurt_state):
+	if(player.state_machine.current_state == hurt_state):
 		self.emitting = true
 	else:
 		self.emitting = false

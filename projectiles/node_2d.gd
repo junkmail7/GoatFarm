@@ -38,7 +38,7 @@ func _on_player_facing_direction_changed(facing_right : bool):
 	
 func _on_body_entered(body):
 	for child in body.get_children():
-		print(child)
+		#print(child)
 		if child is Damageable_Enemy:
 			var direction_to_damageable = (body.global_position - get_parent().get_parent().get_parent().global_position)
 			var direction_sign = sign(direction_to_damageable.x)

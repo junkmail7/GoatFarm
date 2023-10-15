@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvmkn8wpbbcbg"]
+
+[ext_resource type="Script" path="res://player_select.gd" id="1_q2w1y"]
+
+[node name="player_select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q2w1y")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 101.0
+offset_right = 546.0
+offset_bottom = 336.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "player 1:"
+
+[node name="p1_char_1" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "character 1"
+
+[node name="p1_char_2" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "character 2"
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 639.0
+offset_top = 92.0
+offset_right = 1129.0
+offset_bottom = 336.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "player 2:"
+
+[node name="p2_char_1" type="Button" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "character 1"
+
+[node name="p2_char_2" type="Button" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "character 2"
+
+[node name="ready" type="Button" parent="."]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 336.0
+offset_right = 737.0
+offset_bottom = 401.0
+text = "ready
+"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/p1_char_1" to="." method="_on_p_1_char_1_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/p1_char_2" to="." method="_on_p_1_char_2_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/p2_char_1" to="." method="_on_p_2_char_1_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/p2_char_2" to="." method="_on_p_2_char_2_pressed"]
+[connection signal="pressed" from="ready" to="." method="_on_ready_pressed"]

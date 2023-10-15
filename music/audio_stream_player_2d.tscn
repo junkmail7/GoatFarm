@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://8yxondko3er0"]
+
+[ext_resource type="AudioStream" uid="uid://b6ujxsdp40a7k" path="res://music/demogfarmsong - Copy.wav" id="1_7jph1"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_7jph1")

@@ -130,6 +130,10 @@ func _physics_process(delta):
 ####signals n shit	
 func update_animation_parameters():
 	animation_tree.set("parameters/Move/blend_position", direction.x)
+	if(Global.p1_char == 1):
+		animation_tree.set("parameters/idle_2/blend_position", direction.x)
+	else:
+		animation_tree.set("parameters/Move/blend_position", direction.x)
 
 func update_facing_direction():
 	if direction.x > 0:

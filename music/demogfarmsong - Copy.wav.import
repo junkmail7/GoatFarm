@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6ujxsdp40a7k"
+path="res://.godot/imported/demogfarmsong - Copy.wav-e828432b7404d98e843a2f3335b8cb54.sample"
+
+[deps]
+
+source_file="res://music/demogfarmsong - Copy.wav"
+dest_files=["res://.godot/imported/demogfarmsong - Copy.wav-e828432b7404d98e843a2f3335b8cb54.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
