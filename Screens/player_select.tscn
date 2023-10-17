@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvmkn8wpbbcbg"]
+[gd_scene load_steps=3 format=3 uid="uid://cvmkn8wpbbcbg"]
 
 [ext_resource type="Script" path="res://player_select.gd" id="1_q2w1y"]
+[ext_resource type="AudioStream" uid="uid://bsodpypem2kro" path="res://music/bs.wav" id="2_jeski"]
 
 [node name="player_select" type="Control"]
 layout_mode = 3
@@ -65,6 +66,10 @@ offset_right = 737.0
 offset_bottom = 401.0
 text = "ready
 "
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_jeski")
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/p1_char_1" to="." method="_on_p_1_char_1_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/p1_char_2" to="." method="_on_p_1_char_2_pressed"]

@@ -215,7 +215,7 @@ animation = &"grapple"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m4m2j"]
 animation = &"grappled"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_upbem"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_71fni"]
 animation = &"idle_2"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6jcdb"]
@@ -274,13 +274,13 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lnbl3"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ejvy8"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_whar7"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_041h7"]
 states/End/position = Vector2(899, 143)
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_ewhhk")
 states/Move/position = Vector2(219, 143)
-states/Start/position = Vector2(-565, 143)
+states/Start/position = Vector2(-473, 91)
 states/attack1/node = SubResource("AnimationNodeAnimation_n4ipl")
 states/attack1/position = Vector2(219, 240)
 states/dead/node = SubResource("AnimationNodeAnimation_dotmd")
@@ -291,8 +291,8 @@ states/grapple/node = SubResource("AnimationNodeAnimation_0iyta")
 states/grapple/position = Vector2(375, 72)
 states/grappled/node = SubResource("AnimationNodeAnimation_m4m2j")
 states/grappled/position = Vector2(522, 0)
-states/idle_2/node = SubResource("AnimationNodeAnimation_upbem")
-states/idle_2/position = Vector2(-243.5, 245)
+states/idle_2/node = SubResource("AnimationNodeAnimation_71fni")
+states/idle_2/position = Vector2(-224.5, 345)
 states/jump_end/node = SubResource("AnimationNodeAnimation_6jcdb")
 states/jump_end/position = Vector2(27, 0)
 states/jump_start/node = SubResource("AnimationNodeAnimation_bhwqg")
@@ -301,8 +301,8 @@ states/parry/node = SubResource("AnimationNodeAnimation_cwixa")
 states/parry/position = Vector2(353.5, 269)
 states/shoot/node = SubResource("AnimationNodeAnimation_x8bia")
 states/shoot/position = Vector2(522, 245)
-transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_rm4y6"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vt75g"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_3c5lr"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_gd5lc"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_q0a14"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_k5jup"), "Move", "shoot", SubResource("AnimationNodeStateMachineTransition_oxcmv"), "shoot", "Move", SubResource("AnimationNodeStateMachineTransition_0gxak"), "Move", "grapple", SubResource("AnimationNodeStateMachineTransition_n4sn1"), "jump_start", "grapple", SubResource("AnimationNodeStateMachineTransition_as2a6"), "grapple", "jump_start", SubResource("AnimationNodeStateMachineTransition_2dpok"), "grapple", "Move", SubResource("AnimationNodeStateMachineTransition_uce3k"), "shoot", "grappled", SubResource("AnimationNodeStateMachineTransition_nijxh"), "grappled", "shoot", SubResource("AnimationNodeStateMachineTransition_2lkct"), "grapple", "grappled", SubResource("AnimationNodeStateMachineTransition_6had0"), "grappled", "jump_start", SubResource("AnimationNodeStateMachineTransition_sn16g"), "Move", "grabitem", SubResource("AnimationNodeStateMachineTransition_idupb"), "grabitem", "Move", SubResource("AnimationNodeStateMachineTransition_iwlwf"), "Move", "parry", SubResource("AnimationNodeStateMachineTransition_gfh2g"), "parry", "Move", SubResource("AnimationNodeStateMachineTransition_2eqyx"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_lnbl3"), "Start", "idle_2", SubResource("AnimationNodeStateMachineTransition_ejvy8")]
-graph_offset = Vector2(-647.5, 110)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_rm4y6"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vt75g"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_3c5lr"), "Move", "attack1", SubResource("AnimationNodeStateMachineTransition_gd5lc"), "attack1", "Move", SubResource("AnimationNodeStateMachineTransition_q0a14"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_k5jup"), "Move", "shoot", SubResource("AnimationNodeStateMachineTransition_oxcmv"), "shoot", "Move", SubResource("AnimationNodeStateMachineTransition_0gxak"), "Move", "grapple", SubResource("AnimationNodeStateMachineTransition_n4sn1"), "jump_start", "grapple", SubResource("AnimationNodeStateMachineTransition_as2a6"), "grapple", "jump_start", SubResource("AnimationNodeStateMachineTransition_2dpok"), "grapple", "Move", SubResource("AnimationNodeStateMachineTransition_uce3k"), "shoot", "grappled", SubResource("AnimationNodeStateMachineTransition_nijxh"), "grappled", "shoot", SubResource("AnimationNodeStateMachineTransition_2lkct"), "grapple", "grappled", SubResource("AnimationNodeStateMachineTransition_6had0"), "grappled", "jump_start", SubResource("AnimationNodeStateMachineTransition_sn16g"), "Move", "grabitem", SubResource("AnimationNodeStateMachineTransition_idupb"), "grabitem", "Move", SubResource("AnimationNodeStateMachineTransition_iwlwf"), "Move", "parry", SubResource("AnimationNodeStateMachineTransition_gfh2g"), "parry", "Move", SubResource("AnimationNodeStateMachineTransition_2eqyx"), "Move", "dead", SubResource("AnimationNodeStateMachineTransition_lnbl3"), "Start", "idle_2", SubResource("AnimationNodeStateMachineTransition_whar7")]
+graph_offset = Vector2(-619.5, 39)
 
 [sub_resource type="Animation" id="Animation_ea731"]
 length = 0.5
@@ -981,8 +981,7 @@ shape = SubResource("CapsuleShape2D_808ju")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-3, -17)
-texture = ExtResource("3_wvd16")
-hframes = 8
+texture = ExtResource("4_xgu6c")
 frame = 2
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
