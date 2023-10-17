@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c6grl22lwr7ci"
+path="res://.godot/imported/01-Iyaz Replay Bass Boosted-231016_1412.wav-42c62bd5943c1b97aa1c09b658b9e627.sample"
+
+[deps]
+
+source_file="res://music/01-Iyaz Replay Bass Boosted-231016_1412.wav"
+dest_files=["res://.godot/imported/01-Iyaz Replay Bass Boosted-231016_1412.wav-42c62bd5943c1b97aa1c09b658b9e627.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
