@@ -22,7 +22,7 @@ func _on_button_pressed():
 func _on_button_3_pressed():
 	print(Global.stage)
 	if(Global.stage == 1):
-		get_tree().change_scene_to_file(("res://level_scene/level_fr.tscn"))
+		get_tree().change_scene_to_file(("res://level_1_scene/level_1.tscn"))
 	elif(Global.stage == 2):
 		get_tree().change_scene_to_file(("res://level_2_scene/level_2.tscn"))
 		

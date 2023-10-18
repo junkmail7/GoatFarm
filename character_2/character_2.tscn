@@ -1,0 +1,88 @@
+[gd_scene load_steps=11 format=3 uid="uid://42llehgsakss"]
+
+[ext_resource type="PackedScene" uid="uid://c4avhhmn1ds7r" path="res://player_scene/character_body_2d.tscn" id="1_58gdk"]
+[ext_resource type="Script" path="res://character_2.gd" id="2_kcl0k"]
+[ext_resource type="Texture2D" uid="uid://d3ud5wma4auv4" path="res://gfx/Idle-Sheet.png" id="3_xpxyc"]
+[ext_resource type="Texture2D" uid="uid://deiook4k7mqvj" path="res://gfx/idle_2.png" id="4_ludep"]
+
+[sub_resource type="Animation" id="Animation_wubpe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5i3br"]
+resource_name = "dumazzz"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D2:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite2D2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 0, 0, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_68ji7"]
+_data = {
+"RESET": SubResource("Animation_wubpe"),
+"dumazzz": SubResource("Animation_5i3br")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dwgel"]
+animation = &"dumazzz"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oibwm"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_v15et"]
+states/dumazzz/node = SubResource("AnimationNodeAnimation_dwgel")
+states/dumazzz/position = Vector2(531, 107)
+transitions = ["Start", "dumazzz", SubResource("AnimationNodeStateMachineTransition_oibwm")]
+
+[node name="character_2" instance=ExtResource("1_58gdk")]
+script = ExtResource("2_kcl0k")
+
+[node name="Sprite2D" parent="." index="3"]
+visible = false
+texture = ExtResource("3_xpxyc")
+hframes = 4
+frame = 2
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="6"]
+root_node = NodePath("../AnimationTree2")
+libraries = {
+"": SubResource("AnimationLibrary_68ji7")
+}
+
+[node name="Sprite2D2" type="Sprite2D" parent="." index="7"]
+texture = ExtResource("4_ludep")
+
+[node name="AnimationTree2" type="AnimationTree" parent="." index="8"]
+tree_root = SubResource("AnimationNodeStateMachine_v15et")
+anim_player = NodePath("../AnimationPlayer2")

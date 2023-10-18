@@ -9,7 +9,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(shoot_state)
+	#print(shoot_state)
 	if(player.state_machine.current_state == shoot_state):
 		self.emitting = true
 	else:

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-class_name Player
+class_name Character_2
 
 @export var speed : float = 350.0
 @export var friction : float = 400.0
@@ -75,7 +75,7 @@ func _input(event: InputEvent) -> void:
 			$Chain.release()
 
 func _ready():
-	self.global_position = Vector2(500,-300)
+	self.global_position = Vector2(100,0)
 	animation_tree.active = true
 	Global.p1_ammo = 2
 

@@ -22,6 +22,7 @@ func _on_body_entered(body):
 			else:
 				child.parry(Vector2.UP)		
 		elif child is SuperParryable:
+			print("arfarf")
 			var direction_to_damageable = (body.global_position - get_parent().global_position)
 			var direction_sign = sign(direction_to_damageable.x)
 			print(child)

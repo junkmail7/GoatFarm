@@ -859,9 +859,6 @@ offset_bottom = 40.0
 script = ExtResource("19_lc8wb")
 state_machine = NodePath("../CharacterStateMachine")
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(9, -110)
-
 [node name="hit_fx" parent="." node_paths=PackedStringArray("enemy", "hurt_state") instance=ExtResource("32_x8ouk")]
 scale = Vector2(0.2, 0.2)
 frame = 9
@@ -895,15 +892,18 @@ script = ExtResource("34_hpv3u")
 enemy = NodePath("..")
 shoot_state = NodePath("../CharacterStateMachine/shoot")
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(9, -110)
+
+[node name="throw_r" type="Marker2D" parent="."]
+position = Vector2(93, -81)
+
+[node name="throw_l" type="Marker2D" parent="."]
+position = Vector2(-58, -80)
+
 [node name="hit_sfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("37_4wtur")
 script = ExtResource("38_7jlgn")
-
-[node name="throw_r" type="Marker2D" parent="."]
-position = Vector2(54, -62)
-
-[node name="throw_l" type="Marker2D" parent="."]
-position = Vector2(-30, -60)
 
 [connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_snail_facing_direction_changed"]
