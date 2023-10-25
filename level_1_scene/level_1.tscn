@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://mnnshu4tgn23"]
+[gd_scene load_steps=15 format=3 uid="uid://mnnshu4tgn23"]
 
 [ext_resource type="Script" path="res://level_1_scene/level_1.gd" id="1_sp28q"]
 [ext_resource type="PackedScene" uid="uid://d0koof6k8sdrl" path="res://items/brick.tscn" id="1_w2a4l"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://level_1_scene/Label2.gd" id="3_nnlmb"]
 [ext_resource type="Script" path="res://level_1_scene/Label2timer.gd" id="4_1kved"]
 [ext_resource type="AudioStream" uid="uid://b6ujxsdp40a7k" path="res://music/demogfarmsong - Copy.wav" id="9_117b3"]
+[ext_resource type="Script" path="res://level_1_scene/OB.gd" id="10_pkc4m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6kc7l"]
 size = Vector2(119.75, 49)
@@ -18,6 +19,9 @@ size = Vector2(591.5, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qdt6s"]
 size = Vector2(148.5, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rovb"]
+size = Vector2(3236, 356)
 
 [node name="level_1" type="Node2D"]
 script = ExtResource("1_sp28q")
@@ -121,11 +125,32 @@ position = Vector2(603, 29)
 stream = ExtResource("9_117b3")
 autoplay = true
 
+[node name="spawnlocations" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="spawnlocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(79, 415)
+
+[node name="1" type="Node2D" parent="spawnlocations" groups=["PlayerSpawnPoint"]]
+position = Vector2(423, 393)
+
+[node name="OB" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("10_pkc4m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OB"]
+position = Vector2(598, 1090)
+shape = SubResource("RectangleShape2D_4rovb")
+
 [connection signal="char_to_add" from="." to="Camera2D" method="_on_level_1_char_to_add"]
+[connection signal="char_to_add" from="." to="Label" method="_on_level_1_char_to_add"]
+[connection signal="char_to_add" from="." to="Label2" method="_on_level_1_char_to_add"]
 [connection signal="char_to_add" from="." to="brick" method="_on_level_1_char_to_add"]
+[connection signal="char_to_add" from="." to="OB" method="_on_level_1_char_to_add"]
 [connection signal="timeout" from="Camera2D/Shake_timer" to="Camera2D" method="_on_shake_timer_timeout"]
 [connection signal="timeout" from="Camera2D/Timer2" to="Camera2D" method="_on_timer_2_timeout"]
 [connection signal="body_entered" from="Area2D3" to="Area2D3" method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D3" to="Area2D3" method="_on_body_exited"]
 [connection signal="timeout" from="Area2D3/Timer" to="Label" method="_on_timer_timeout"]
 [connection signal="timeout" from="Area2D3/Timer2" to="Label2" method="_on_timer_2_timeout"]
+[connection signal="body_entered" from="OB" to="OB" method="_on_body_entered"]

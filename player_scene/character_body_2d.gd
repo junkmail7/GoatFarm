@@ -78,55 +78,110 @@ func _ready():
 	self.global_position = Vector2(500,-300)
 	animation_tree.active = true
 	Global.p1_ammo = 2
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 
 func _physics_process(delta):
-	#print(smartguy)
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	if Global.online == true:
+		if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+			#print(smartguy)
+			# Add the gravity.
+			Global.p1_lokaysh = self.global_position
+			#print(Global.p1_lokaysh)
+			if not is_on_floor():
+				velocity.y += gravity * delta
 
-	direction = Input.get_vector("left", "right", "up", "down")
-	
-	if direction.x != 0 && state_machine.check_if_can_move():
-		velocity.x = move_toward(velocity.x, speed * direction.x, acceleration * delta)
-	elif(smartguy == true) && (face_dir == true): ## bullet knockback
-		velocity += Vector2(-15,-5)
-		smartguy == false
-	elif(smartguy == true) && (face_dir == false):
-		velocity += Vector2(15,-5)
-		smartguy == false
+			direction = Input.get_vector("left", "right", "up", "down")
+			
+			if direction.x != 0 && state_machine.check_if_can_move():
+				velocity.x = move_toward(velocity.x, speed * direction.x, acceleration * delta)
+			elif(smartguy == true) && (face_dir == true): ## bullet knockback
+				velocity += Vector2(-15,-5)
+				smartguy == false
+			elif(smartguy == true) && (face_dir == false):
+				velocity += Vector2(15,-5)
+				smartguy == false
+			else:
+				velocity.x = move_toward(velocity.x, 0, friction * delta)
+
+
+			if $Chain.hooked:
+				update_hooked($Chain.hooked)
+				# `to_local($Chain.tip).normalized()` is the direction that the chain is pulling
+				chain_velocity = to_local($Chain.tip).normalized() * CHAIN_PULL
+				if chain_velocity.y > 0:
+					# Pulling down isn't as strong
+					chain_velocity.y *= 1.55
+				else:
+					# Pulling up is stronger
+					chain_velocity.y *= 1.63
+				if sign(chain_velocity.x) != sign(velocity.x):
+					# if we are trying to walk in a different
+					# direction than the chain is pulling
+					# reduce its pull
+					chain_velocity.x *= 0.7
+				if(smartguy == true): #we shootin and grapplin
+					chain_velocity.x *= 2 
+					chain_velocity.y *= 2 
+			else:
+				update_hooked(false)
+				# Not hooked -> no chain velocity
+				chain_velocity = Vector2(0,0)
+			velocity += chain_velocity
+
+
+			move_and_slide()
+			update_animation_parameters()
+			update_facing_direction()
 	else:
-		velocity.x = move_toward(velocity.x, 0, friction * delta)
+		#print(smartguy)
+		# Add the gravity.
+		Global.p1_lokaysh = self.global_position
+		#print(Global.p1_lokaysh)
+		if not is_on_floor():
+			velocity.y += gravity * delta
 
-
-	if $Chain.hooked:
-		update_hooked($Chain.hooked)
-		# `to_local($Chain.tip).normalized()` is the direction that the chain is pulling
-		chain_velocity = to_local($Chain.tip).normalized() * CHAIN_PULL
-		if chain_velocity.y > 0:
-			# Pulling down isn't as strong
-			chain_velocity.y *= 1.55
+		direction = Input.get_vector("left", "right", "up", "down")
+		
+		if direction.x != 0 && state_machine.check_if_can_move():
+			velocity.x = move_toward(velocity.x, speed * direction.x, acceleration * delta)
+		elif(smartguy == true) && (face_dir == true): ## bullet knockback
+			velocity += Vector2(-15,-5)
+			smartguy == false
+		elif(smartguy == true) && (face_dir == false):
+			velocity += Vector2(15,-5)
+			smartguy == false
 		else:
-			# Pulling up is stronger
-			chain_velocity.y *= 1.63
-		if sign(chain_velocity.x) != sign(velocity.x):
-			# if we are trying to walk in a different
-			# direction than the chain is pulling
-			# reduce its pull
-			chain_velocity.x *= 0.7
-		if(smartguy == true): #we shootin and grapplin
-			chain_velocity.x *= 2 
-			chain_velocity.y *= 2 
-	else:
-		update_hooked(false)
-		# Not hooked -> no chain velocity
-		chain_velocity = Vector2(0,0)
-	velocity += chain_velocity
+			velocity.x = move_toward(velocity.x, 0, friction * delta)
 
 
-	move_and_slide()
-	update_animation_parameters()
-	update_facing_direction()
+		if $Chain.hooked:
+			update_hooked($Chain.hooked)
+			# `to_local($Chain.tip).normalized()` is the direction that the chain is pulling
+			chain_velocity = to_local($Chain.tip).normalized() * CHAIN_PULL
+			if chain_velocity.y > 0:
+				# Pulling down isn't as strong
+				chain_velocity.y *= 1.55
+			else:
+				# Pulling up is stronger
+				chain_velocity.y *= 1.63
+			if sign(chain_velocity.x) != sign(velocity.x):
+				# if we are trying to walk in a different
+				# direction than the chain is pulling
+				# reduce its pull
+				chain_velocity.x *= 0.7
+			if(smartguy == true): #we shootin and grapplin
+				chain_velocity.x *= 2 
+				chain_velocity.y *= 2 
+		else:
+			update_hooked(false)
+			# Not hooked -> no chain velocity
+			chain_velocity = Vector2(0,0)
+		velocity += chain_velocity
+
+
+		move_and_slide()
+		update_animation_parameters()
+		update_facing_direction()
 	
 ####signals n shit	
 func update_animation_parameters():

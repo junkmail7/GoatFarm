@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bccj5abkf0cra"]
+[gd_scene load_steps=17 format=3 uid="uid://bccj5abkf0cra"]
 
 [ext_resource type="Script" path="res://level_2_scene/level_2.gd" id="1_gvqmo"]
 [ext_resource type="Texture2D" uid="uid://deiook4k7mqvj" path="res://gfx/idle_2.png" id="1_ptdvy"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://level_2_scene/score.gd" id="6_v5hyc"]
 [ext_resource type="Script" path="res://level_2_scene/score2.gd" id="7_1mq0s"]
 [ext_resource type="Script" path="res://level_2_scene/Label2plat2.gd" id="7_ififb"]
+[ext_resource type="Script" path="res://level_2_scene/ob2.gd" id="10_bd8dv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ynk2g"]
 texture = ExtResource("1_ptdvy")
@@ -179,6 +180,9 @@ size = Vector2(278, 322.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ea2ep"]
 size = Vector2(276, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lioj"]
+size = Vector2(3923, 96)
+
 [node name="level_2" type="Node2D"]
 script = ExtResource("1_gvqmo")
 
@@ -266,11 +270,24 @@ timer2 = NodePath("../../Timer2")
 position = Vector2(542, 238)
 shape = SubResource("RectangleShape2D_ea2ep")
 
+[node name="ob2" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("10_bd8dv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ob2"]
+position = Vector2(631, 1006)
+shape = SubResource("RectangleShape2D_2lioj")
+
+[connection signal="char_to_add" from="." to="score" method="_on_level_2_char_to_add"]
+[connection signal="char_to_add" from="." to="score2" method="_on_level_2_char_to_add"]
 [connection signal="char_to_add" from="." to="Camera2D" method="_on_level_2_char_to_add"]
 [connection signal="char_to_add" from="." to="brick" method="_on_level_2_char_to_add"]
+[connection signal="char_to_add" from="." to="ob2" method="_on_level_2_char_to_add"]
 [connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]
 [connection signal="timeout" from="Camera2D/Shake_timer" to="Camera2D" method="_on_shake_timer_timeout"]
 [connection signal="body_entered" from="winplat" to="winplat" method="_on_body_entered"]
 [connection signal="body_exited" from="winplat" to="winplat" method="_on_body_exited"]
 [connection signal="timeout" from="winplat/Timer" to="score" method="_on_timer_timeout"]
 [connection signal="timeout" from="winplat/Timer2" to="score2" method="_on_timer_2_timeout"]
+[connection signal="body_entered" from="ob2" to="ob2" method="_on_body_entered"]

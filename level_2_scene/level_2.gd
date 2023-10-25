@@ -3,20 +3,30 @@ extends Node2D
 var character_scene1 : PackedScene = preload("res://player_scene/character_body_2d.tscn")
 var character_scene2 : PackedScene = preload("res://character_2/character_2.tscn")
 var enemy : PackedScene = preload("res://enemy_scene/enemy.tscn")
+var character_2_enemy : PackedScene = preload("res://character_2_enemy/character_2_enemy.tscn")
+var enemy_ai : PackedScene = preload("res://enemy_ai/enemy_ai.tscn")
+
 # Called when the node enters the scene tree for the first time.
 
 signal char_to_add(char : CharacterBody2D)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if Global.p1_char == 1:
-		instantiate_character(character_scene1)
-	elif Global.p1_char == 2:
-		instantiate_character(character_scene2)
-	if Global.p2_char == 1:
-		instantiate_character(enemy)
-	elif Global.p2_char == 2:
-		instantiate_character(enemy)
+	if Global.single_player == false:
+		if Global.p1_char == 1:
+			instantiate_character(character_scene1)
+		elif Global.p1_char == 2:
+			instantiate_character(character_scene2)
+		if Global.p2_char == 1:
+			instantiate_character(enemy)
+		elif Global.p2_char == 2:
+			instantiate_character(character_2_enemy)
+	else:
+		if Global.p1_char == 1:
+			instantiate_character(character_scene1)
+		elif Global.p1_char == 2:
+			instantiate_character(character_scene2)
+		instantiate_character(enemy_ai)
 
 # Function to instantiate a character
 func instantiate_character(character_scene : PackedScene) -> void:

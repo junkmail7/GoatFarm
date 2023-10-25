@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://di2nueqk8s0gk"]
+
+[ext_resource type="PackedScene" uid="uid://dt47cwh8xk6g7" path="res://enemy_scene/enemy.tscn" id="1_nmvjl"]
+[ext_resource type="Script" path="res://enemy_ai/enemy_ai.gd" id="2_k4886"]
+[ext_resource type="Script" path="res://enemy_ai/ground.gd" id="3_sbo6u"]
+
+[node name="enemy_ai" instance=ExtResource("1_nmvjl")]
+script = ExtResource("2_k4886")
+starting_move_direction = Vector2(1, 0)
+
+[node name="ground" parent="CharacterStateMachine" index="0"]
+script = ExtResource("3_sbo6u")
+
+[node name="ai_eyes" type="RayCast2D" parent="." index="20"]
+target_position = Vector2(252, -22)
+collision_mask = 83
+
+[node name="ai_eyes_left" type="RayCast2D" parent="." index="21"]
+target_position = Vector2(-208, -17)
+collision_mask = 83
+
+[node name="ai_eyes_up" type="RayCast2D" parent="." index="22"]
+target_position = Vector2(13, -162)
+collision_mask = 83

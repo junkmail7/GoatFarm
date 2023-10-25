@@ -1,4 +1,4 @@
-extends Label
+extends Area2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -12,16 +12,22 @@ func _process(delta):
 	if char_arr.size() == 2:
 		object1 = char_arr[0]
 		object2 = char_arr[1]
-	if(score == 5):
-		get_tree().change_scene_to_file(("res://Screens/win1.tscn"))
 
-var score = 0
-func _on_timer_timeout():
-	score+=1
-	text = str(score)
-	object1.global_position = Vector2(20,-100)
+
+func _on_body_entered(body):
+	for child in body.get_children():
+		if (child is AudioListener2D):
+			object1.global_position = Vector2(20,-100)
+		elif(child is RayCast2D):
+			object2.global_position = Vector2(70,-100)
 
 var char_arr = []
-func _on_level_1_char_to_add(char):
 
+func _on_level_1_char_to_add(char):
+	char_arr.push_back(char)
+
+
+
+
+func _on_level_2_char_to_add(char):
 	char_arr.push_back(char)

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://bc5m3rl2j0fhf"]
+[gd_scene load_steps=2 format=3 uid="uid://bc5m3rl2j0fhf"]
+
+[ext_resource type="Script" path="res://Screens/win1.gd" id="1_0gn1o"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,9 +9,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_0gn1o")
 
 [node name="TextEdit" type="TextEdit" parent="."]
 layout_mode = 0
-offset_right = 271.0
-offset_bottom = 50.0
+offset_left = 500.0
+offset_top = 159.0
+offset_right = 771.0
+offset_bottom = 209.0
 text = "someone is win"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 614.0
+offset_top = 293.0
+offset_right = 667.0
+offset_bottom = 324.0
+text = "go back
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

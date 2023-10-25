@@ -11,8 +11,8 @@ position = Vector2(-1, -30)
 script = ExtResource("1_x6d3n")
 
 [node name="Links" type="Sprite2D" parent="."]
-position = Vector2(-1.78814e-07, 10.4998)
-scale = Vector2(0.625, 0.812526)
+position = Vector2(-0.5, 10.4998)
+scale = Vector2(0.5625, 0.812526)
 texture = ExtResource("2_21trl")
 
 [node name="Timer" type="Timer" parent="."]

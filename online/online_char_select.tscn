@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddgjexv5nd4fd"]
+
+[ext_resource type="Script" path="res://online_char_select.gd" id="1_huhmk"]
+
+[node name="online_char_select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_huhmk")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 263.0
+offset_right = 536.0
+offset_bottom = 343.0
+text = "char 2 "
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 297.0
+offset_top = 80.0
+offset_right = 544.0
+offset_bottom = 157.0
+text = "char 1
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

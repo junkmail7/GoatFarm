@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://cejx8just3ne6"]
+
+[ext_resource type="Script" path="res://online/control.gd" id="1_fsu2r"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fsu2r")
+
+[node name="host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 77.0
+offset_right = 284.0
+offset_bottom = 152.0
+text = "host
+"
+
+[node name="join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 220.0
+offset_right = 290.0
+offset_bottom = 367.0
+text = "join
+"
+
+[node name="start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 420.0
+offset_top = 169.0
+offset_right = 515.0
+offset_bottom = 223.0
+text = "start
+"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 437.0
+offset_top = 84.0
+offset_right = 772.0
+offset_bottom = 115.0
+placeholder_text = "enta name"
+
+[connection signal="pressed" from="host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="start" to="." method="_on_start_pressed"]
