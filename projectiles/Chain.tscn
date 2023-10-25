@@ -11,9 +11,12 @@ position = Vector2(-1, -30)
 script = ExtResource("1_x6d3n")
 
 [node name="Links" type="Sprite2D" parent="."]
-position = Vector2(-0.5, 10.4998)
-scale = Vector2(0.5625, 0.812526)
+texture_repeat = 2
+position = Vector2(0, 13)
+scale = Vector2(0.740625, 0.906253)
 texture = ExtResource("2_21trl")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.315

@@ -1,9 +1,10 @@
 extends Line2D
 
 @export var player : Player
-@onready var Chain : Node2D = $Chain
+@export var chain : Node2D
 @export var grapple : State
 @export var grappled : State
+var fixed_length = 50.0  # Adjust the desired fixed length
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -11,8 +12,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print($Tip.global_position = tip)
+	#print(player.state_machine.current_state == grapple)
 	if(player.state_machine.current_state == grapple) || (player.state_machine.current_state == grappled):
-		add_point(Vector2(50,100))
+		var direction = chain.global_position - player.global_position
+		var normalized_direction = direction.normalized()
+		var second_point = player.global_position + normalized_direction * fixed_length
+		points = [player.global_position, second_point]
 	else:
 		clear_points()

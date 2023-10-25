@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://c4avhhmn1ds7r"]
+[gd_scene load_steps=115 format=3 uid="uid://c4avhhmn1ds7r"]
 
 [ext_resource type="Script" path="res://player_scene/character_body_2d.gd" id="1_8u4q0"]
 [ext_resource type="PackedScene" uid="uid://bvdj8i85hs41i" path="res://projectiles/Chain.tscn" id="2_dcwie"]
@@ -37,7 +37,6 @@
 [ext_resource type="AudioStream" uid="uid://chud1ic0gmsue" path="res://sfx/shoot.wav" id="34_4tlny"]
 [ext_resource type="Script" path="res://player_scene/shoot_fx.gd" id="35_nwgjo"]
 [ext_resource type="AudioStream" uid="uid://dup1xbwjmma6k" path="res://sfx/reload.wav" id="36_12lhv"]
-[ext_resource type="Script" path="res://player_scene/ghooktest.gd" id="38_dlcoc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k45gd"]
 atlas = ExtResource("2_fo24g")
@@ -1189,13 +1188,6 @@ stream = ExtResource("36_12lhv")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_m3l0j")
-
-[node name="ghooktest" type="Line2D" parent="." node_paths=PackedStringArray("player", "grapple", "grappled")]
-position = Vector2(0, -50)
-script = ExtResource("38_dlcoc")
-player = NodePath("..")
-grapple = NodePath("../CharacterStateMachine/grapple")
-grappled = NodePath("../CharacterStateMachine/grappled")
 
 [connection signal="facing_direction_changed" from="." to="." method="_on_facing_direction_changed"]
 [connection signal="facing_direction_changed" from="." to="CharacterStateMachine/shoot" method="_on_character_body_2d_facing_direction_changed"]

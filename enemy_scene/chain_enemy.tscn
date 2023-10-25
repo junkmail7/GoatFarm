@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ba70ep2l72f5w"]
 
 [ext_resource type="Script" path="res://enemy_scene/chain_enemy.gd" id="1_y268e"]
-[ext_resource type="Texture2D" uid="uid://jys8l12ya2ud" path="res://gfx/gumpo.png" id="2_igh52"]
+[ext_resource type="Texture2D" uid="uid://bg5bjhn7gcr80" path="res://gfx/Untitled.png" id="2_07drf"]
 [ext_resource type="Texture2D" uid="uid://bu2b7syxssq1w" path="res://gfx/durbe.png" id="3_34gef"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_que1e"]
@@ -11,9 +11,13 @@ radius = 11.0454
 script = ExtResource("1_y268e")
 
 [node name="links" type="Sprite2D" parent="."]
-position = Vector2(1, -25)
-scale = Vector2(0.0125523, 0.0376344)
-texture = ExtResource("2_igh52")
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(1, 16)
+scale = Vector2(0.309848, 1.12596)
+texture = ExtResource("2_07drf")
+region_enabled = true
+region_rect = Rect2(8, 16, 56, 90)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.334

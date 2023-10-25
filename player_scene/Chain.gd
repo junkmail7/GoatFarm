@@ -40,7 +40,8 @@ func _process(_delta: float) -> void:
 	links.rotation = self.position.angle_to_point(tip_loc) + deg_to_rad(90)
 	$Tip.rotation = self.position.angle_to_point(tip_loc) + deg_to_rad(90)
 	#print(tip_loc)
-	links.position = tip_loc 						# The links are moved to start at the tip
+	var chain_center = get_parent().get_parent().global_position + (tip_loc / 2)
+	links.position = chain_center 						# The links are moved to start at the tip
 	links.region_rect.size.y = tip_loc.length()		# and get extended for the distance between (0,0) and the tip
 
 # Every physics frame we update the tip position
