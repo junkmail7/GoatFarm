@@ -1,33 +1,40 @@
-[gd_scene load_steps=15 format=3 uid="uid://mnnshu4tgn23"]
+[gd_scene load_steps=20 format=3 uid="uid://mnnshu4tgn23"]
 
 [ext_resource type="Script" path="res://level_1_scene/level_1.gd" id="1_sp28q"]
 [ext_resource type="PackedScene" uid="uid://d0koof6k8sdrl" path="res://items/brick.tscn" id="1_w2a4l"]
 [ext_resource type="Script" path="res://level_1_scene/Camera2Dlevel1.gd" id="2_6nlhn"]
 [ext_resource type="Script" path="res://level_1_scene/Label1.gd" id="2_shrda"]
 [ext_resource type="Script" path="res://level_1_scene/Area2D3.gd" id="2_tm8gn"]
+[ext_resource type="Texture2D" uid="uid://c7qd7n4ofpckg" path="res://gfx/gibb.png" id="3_74xwe"]
+[ext_resource type="Texture2D" uid="uid://dixgy6vpfecyi" path="res://gfx/plat.png" id="3_d2rlm"]
 [ext_resource type="Script" path="res://level_1_scene/Labeltimer.gd" id="3_mwaue"]
 [ext_resource type="Script" path="res://level_1_scene/Label2.gd" id="3_nnlmb"]
 [ext_resource type="Script" path="res://level_1_scene/Label2timer.gd" id="4_1kved"]
+[ext_resource type="Texture2D" uid="uid://c5s103umkh827" path="res://gfx/Untitled2.png" id="4_b6dac"]
 [ext_resource type="AudioStream" uid="uid://b6ujxsdp40a7k" path="res://music/demogfarmsong - Copy.wav" id="9_117b3"]
 [ext_resource type="Script" path="res://level_1_scene/OB.gd" id="10_pkc4m"]
+[ext_resource type="Texture2D" uid="uid://yefyleix7mg0" path="res://gfx/enemy buyll.png" id="12_gwbry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6kc7l"]
-size = Vector2(119.75, 49)
+size = Vector2(158.438, 49)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8w4oo"]
-size = Vector2(591.5, 56)
+size = Vector2(642, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qdt6s"]
-size = Vector2(148.5, 20)
+size = Vector2(148.5, 104)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4rovb"]
 size = Vector2(3236, 356)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u33pp"]
+size = Vector2(329.5, 126)
 
 [node name="level_1" type="Node2D"]
 script = ExtResource("1_sp28q")
 
 [node name="Node2D" type="TileMap" parent="."]
-position = Vector2(545, 163)
+position = Vector2(517, 220)
 format = 2
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("timer", "shake_timer")]
@@ -43,35 +50,58 @@ one_shot = true
 one_shot = true
 
 [node name="Area2D" type="StaticBody2D" parent="."]
-position = Vector2(501, 64)
+position = Vector2(473, 121)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(441, 398)
+position = Vector2(-269, 104)
 shape = SubResource("RectangleShape2D_6kc7l")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+position = Vector2(-271, 107)
+scale = Vector2(0.677824, 0.284946)
+texture = ExtResource("3_d2rlm")
 
 [node name="Area2D5" type="StaticBody2D" parent="."]
-position = Vector2(745, 83)
+z_index = -6
+position = Vector2(572, 118)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D5"]
-position = Vector2(-113, 34)
+position = Vector2(1, 44)
 shape = SubResource("RectangleShape2D_6kc7l")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D5"]
+position = Vector2(0.125004, 49)
+scale = Vector2(0.687238, 0.317204)
+texture = ExtResource("3_d2rlm")
 
 [node name="Area2D4" type="StaticBody2D" parent="."]
-position = Vector2(1017, 149)
+position = Vector2(963, 95)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D4"]
-position = Vector2(1, 10)
+position = Vector2(-11, 8)
 shape = SubResource("RectangleShape2D_6kc7l")
 
+[node name="Sprite2D" type="Sprite2D" parent="Area2D4"]
+position = Vector2(-13, 8)
+scale = Vector2(1.83908, 0.546512)
+texture = ExtResource("4_b6dac")
+
 [node name="Area2D2" type="StaticBody2D" parent="."]
-position = Vector2(297, 460)
+z_index = -3
+position = Vector2(135, 529)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(15, 13)
+position = Vector2(53, -27)
 shape = SubResource("RectangleShape2D_8w4oo")
 
+[node name="Sprite2D" type="Sprite2D" parent="Area2D2"]
+z_index = -14
+position = Vector2(56.25, -20)
+scale = Vector2(2.68828, 0.392473)
+texture = ExtResource("3_74xwe")
+
 [node name="Area2D3" type="Area2D" parent="." node_paths=PackedStringArray("timer", "timer2")]
-position = Vector2(1012, 125)
+position = Vector2(958, 71)
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("2_tm8gn")
@@ -79,14 +109,14 @@ timer = NodePath("Timer")
 timer2 = NodePath("Timer2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
-position = Vector2(1, 5)
+position = Vector2(1, -37)
 shape = SubResource("RectangleShape2D_qdt6s")
 
 [node name="Label" type="Label" parent="Area2D3/CollisionShape2D" node_paths=PackedStringArray("timer")]
-offset_left = -6.0
-offset_top = -58.0
-offset_right = 200.0
-offset_bottom = 29.0
+offset_left = 69.0
+offset_top = -109.0
+offset_right = 275.0
+offset_bottom = -22.0
 script = ExtResource("3_mwaue")
 timer = NodePath("../../Timer")
 
@@ -97,6 +127,7 @@ offset_right = 77.0
 offset_bottom = -34.0
 script = ExtResource("4_1kved")
 timer2 = NodePath("../../Timer2")
+metadata/_edit_use_anchors_ = true
 
 [node name="Timer" type="Timer" parent="Area2D3"]
 one_shot = true
@@ -105,21 +136,21 @@ one_shot = true
 one_shot = true
 
 [node name="Label" type="Label" parent="."]
-offset_left = 789.0
-offset_top = 209.0
-offset_right = 1099.0
-offset_bottom = 232.0
+offset_left = 738.0
+offset_top = 143.0
+offset_right = 1048.0
+offset_bottom = 166.0
 script = ExtResource("2_shrda")
 
 [node name="Label2" type="Label" parent="."]
-offset_left = 1006.0
-offset_top = 213.0
-offset_right = 1444.0
-offset_bottom = 242.0
+offset_left = 955.0
+offset_top = 147.0
+offset_right = 1393.0
+offset_bottom = 176.0
 script = ExtResource("3_nnlmb")
 
 [node name="brick" parent="." instance=ExtResource("1_w2a4l")]
-position = Vector2(603, 29)
+position = Vector2(575, 86)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_117b3")
@@ -128,10 +159,10 @@ autoplay = true
 [node name="spawnlocations" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="spawnlocations" groups=["PlayerSpawnPoint"]]
-position = Vector2(79, 415)
+position = Vector2(-83, 484)
 
 [node name="1" type="Node2D" parent="spawnlocations" groups=["PlayerSpawnPoint"]]
-position = Vector2(423, 393)
+position = Vector2(261, 462)
 
 [node name="OB" type="Area2D" parent="."]
 collision_layer = 7
@@ -142,6 +173,18 @@ script = ExtResource("10_pkc4m")
 position = Vector2(598, 1090)
 shape = SubResource("RectangleShape2D_4rovb")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(662.25, 450)
+shape = SubResource("RectangleShape2D_u33pp")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(660, 480)
+scale = Vector2(1.35774, 1)
+texture = ExtResource("12_gwbry")
+
+[connection signal="char_to_add" from="." to="." method="_on_char_to_add"]
 [connection signal="char_to_add" from="." to="Camera2D" method="_on_level_1_char_to_add"]
 [connection signal="char_to_add" from="." to="Label" method="_on_level_1_char_to_add"]
 [connection signal="char_to_add" from="." to="Label2" method="_on_level_1_char_to_add"]
