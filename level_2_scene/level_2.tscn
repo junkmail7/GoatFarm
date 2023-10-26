@@ -279,6 +279,7 @@ script = ExtResource("10_bd8dv")
 position = Vector2(631, 1006)
 shape = SubResource("RectangleShape2D_2lioj")
 
+[connection signal="char_to_add" from="." to="." method="_on_char_to_add"]
 [connection signal="char_to_add" from="." to="score" method="_on_level_2_char_to_add"]
 [connection signal="char_to_add" from="." to="score2" method="_on_level_2_char_to_add"]
 [connection signal="char_to_add" from="." to="Camera2D" method="_on_level_2_char_to_add"]

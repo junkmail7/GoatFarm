@@ -3,9 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://ckh8m5lrstgfo" path="res://gfx/blood1.png" id="1_c8b5o"]
 [ext_resource type="Script" path="res://blood/surface.gd" id="1_ey271"]
 
-[node name="surface" type="Sprite2D"]
+[node name="surface" type="Sprite2D" node_paths=PackedStringArray("timer")]
 z_index = 4096
-position = Vector2(5.96046e-08, 0)
-scale = Vector2(0.854167, 0.854167)
+scale = Vector2(0.880208, 0.880208)
 texture = ExtResource("1_c8b5o")
 script = ExtResource("1_ey271")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.435
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

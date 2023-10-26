@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://mak047o61vop"]
+[gd_scene load_steps=3 format=3 uid="uid://mak047o61vop"]
 
 [ext_resource type="Script" path="res://stage_select.gd" id="1_57p02"]
+[ext_resource type="AudioStream" uid="uid://bwvvsflluh6yk" path="res://music/stage.wav" id="2_skmce"]
 
 [node name="stage_select" type="Control"]
 layout_mode = 3
@@ -32,6 +33,10 @@ text = "stage 2"
 [node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "ready"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_skmce")
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
