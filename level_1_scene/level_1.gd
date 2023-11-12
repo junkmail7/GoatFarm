@@ -5,6 +5,7 @@ var character_scene2 : PackedScene = preload("res://character_2/character_2.tscn
 var enemy : PackedScene = preload("res://enemy_scene/enemy.tscn")
 var character_2_enemy : PackedScene = preload("res://character_2_enemy/character_2_enemy.tscn")
 var blood : PackedScene = preload("res://blood/blood.tscn")
+var gib_part : PackedScene = preload("res://items/gib_part.tscn")
 
 # Called when the node enters the scene tree for the first time.
 
@@ -54,11 +55,21 @@ func _physics_process(delta: float) -> void:
 			var blood_instance = blood.instantiate()
 			blood_instance.global_position = object1.global_position
 			add_child(blood_instance)
+		if(object1.state_machine.current_state.name == "dead"):
+			#print(object1.state_machine.current_state.name)
+			var gibstuff = gib_part.instantiate()
+			gibstuff.global_position = object1.global_position
+			add_child(gibstuff)
 		if(object2.character_state_machine.current_state.name == "hurt"):
 			#print(object1.state_machine.current_state.name)
 			var blood_instance = blood.instantiate()
 			blood_instance.global_position = object2.global_position
 			add_child(blood_instance)
+		if(object2.character_state_machine.current_state.name == "dead"):
+			#print(object1.state_machine.current_state.name)
+			var gibstuff = gib_part.instantiate()
+			gibstuff.global_position = object2.global_position
+			add_child(gibstuff)
 		
 
 # Function to instantiate a character

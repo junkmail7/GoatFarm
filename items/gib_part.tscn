@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://clqos4yasbtgd"]
+
+[ext_resource type="PackedScene" uid="uid://d0koof6k8sdrl" path="res://items/brick.tscn" id="1_qiexe"]
+[ext_resource type="Script" path="res://items/gibPart.gd" id="2_57gc3"]
+[ext_resource type="Texture2D" uid="uid://kxo1khx3oe88" path="res://gfx/Sunken_Bone.webp" id="3_nxwxy"]
+
+[node name="gibPart" instance=ExtResource("1_qiexe")]
+script = ExtResource("2_57gc3")
+
+[node name="Sprite2D" parent="." index="1"]
+visible = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="." index="2"]
+position = Vector2(1, 0)
+scale = Vector2(0.1875, 0.179687)
+texture = ExtResource("3_nxwxy")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, 1)
